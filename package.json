@@ -1,0 +1,40 @@
+{
+  "name": "schedule",
+  "version": "0.0.0",
+  "description": "Studio session booking schedule",
+  "keywords": [
+    "schedule",
+    "studio",
+    "booking"
+  ],
+  "author": "Vyacheslav Aristov <vv.aristov@gmail.ru> (http://twitter.com/aristov7)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aristov/schedule.git"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.5.3",
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "css-loader": "^0.26.0",
+    "postcss-loader": "^1.1.1",
+    "dom4": "^1.8.3",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.3",
+    "whatwg-fetch": "^2.0.0"
+  },
+  "scripts": {
+    "serve": "WATCH=1 ENTRY=index webpack"
+  },
+  "engines": {
+    "node": ">=0.6"
+  },
+  "dependencies": {
+    "htmlmodule": "^0.3.0"
+  }
+}

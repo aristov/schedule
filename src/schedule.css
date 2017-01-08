@@ -1,0 +1,34 @@
+body
+{
+    font: 20px "Courier New", Courier, monospace;
+}
+table
+{
+    width: 100%;
+}
+table td
+{
+    width: 18%;
+    text-align: center;
+}
+table th
+{
+    color: rgba(0, 0, 0, 0.7);
+}
+table thead th
+{
+    padding: 20px;
+}
+table tbody th
+{
+    font-size: 16px;
+    font-weight: normal;
+}
+table tbody tr:nth-child(2n + 1) td
+{
+    background: rgba(0, 0, 0, 0.03);
+}
+table tbody tr td[aria-selected=true]
+{
+    background: rgba(0, 255, 255, 0.2);
+}
