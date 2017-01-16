@@ -6,7 +6,6 @@ import { ENTER, ESCAPE, SPACE, BACKSPACE, ARROWS, DIGITS, LETTERS } from './keyC
 export default class Grid extends Instance {
     constructor(element, init) {
         super(element, {
-            dataset : { instance : 'Grid' },
             role : 'grid',
             className : 'grid',
             mode : 'navigation'
@@ -114,9 +113,6 @@ export default class Grid extends Instance {
             else this.selection = target
         }
     }
-    static attachTo(node) {
-        GridCell.attachTo(node)
-    }
 }
 
 export function grid(init) {
@@ -128,7 +124,6 @@ export function grid(init) {
 export class Row extends Instance {
     constructor(object, init) {
         super(object, {
-            dataset : { instance : 'Row' },
             role : 'row',
             className : 'row'
         })
@@ -165,7 +160,6 @@ const LETTER_CODES = Object.values(LETTERS)
 export class GridCell extends Instance {
     constructor(element, init) {
         super(element, {
-            dataset : { instance : 'GridCell' },
             role : 'gridcell',
             className : 'gridcell',
             tabIndex : -1,

@@ -4,9 +4,9 @@ Object.defineProperty(Element.prototype, 'instance', {
     enumerable : true,
     writable : true,
     value : null
-});
+})
 
-const map = Array.prototype.map;
+const map = Array.prototype.map
 
 export class Instance extends ARIADOMAssembler {
     /**
@@ -16,7 +16,7 @@ export class Instance extends ARIADOMAssembler {
      */
     constructor(element, init) {
         super(element, init)
-        this.element.instance = this;
+        this.element.instance = this
     }
 
     set element(element) {
@@ -32,7 +32,7 @@ export class Instance extends ARIADOMAssembler {
      * @param {String} hidden state
      */
     set hidden(hidden) {
-        this.element.hidden = hidden === 'true';
+        this.element.hidden = hidden === 'true'
     }
 
     /**
@@ -40,7 +40,7 @@ export class Instance extends ARIADOMAssembler {
      * @returns {String}
      */
     get hidden() {
-        return String(this.element.hidden);
+        return String(this.element.hidden)
     }
 
     /**
@@ -48,7 +48,7 @@ export class Instance extends ARIADOMAssembler {
      * @param {String} disabled state
      */
     set disabled(disabled) {
-        this.element.setAttribute('aria-disabled', disabled);
+        this.element.setAttribute('aria-disabled', disabled)
     }
 
     /**
@@ -56,7 +56,7 @@ export class Instance extends ARIADOMAssembler {
      * @returns {String}
      */
     get disabled() {
-        return this.element.getAttribute('aria-disabled') || 'false';
+        return this.element.getAttribute('aria-disabled') || 'false'
     }
 
     /**
@@ -67,8 +67,8 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance} this
      */
     on(type, listener, context = this) {
-        this.element.addEventListener(type, listener.bind(context));
-        return this;
+        this.element.addEventListener(type, listener.bind(context))
+        return this
     }
 
     /**
@@ -78,9 +78,9 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance} this
      */
     emit(type, init = { bubbles : true, cancelable : true }) {
-        const event = new Event(type, init);
-        this.element.dispatchEvent(event);
-        return this;
+        const event = new Event(type, init)
+        this.element.dispatchEvent(event)
+        return this
     }
 
     /**
@@ -91,10 +91,10 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance|null}
      */
     find(Class, filter, value) {
-        const selector = `[data-instance=${Class.name}]`;
+        const selector = `[role~=${Class.name.toLowerCase()}]`
         return filter?
             this.findAll(Class, filter, value)[0] || null :
-            Class.getInstance(this.element.querySelector(selector));
+            Class.getInstance(this.element.querySelector(selector))
     }
 
     /**
@@ -105,15 +105,15 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Array} array of found instances
      */
     findAll(Class, filter, value) {
-        const selector = `[data-instance=${Class.name}]`;
+        const selector = `[role~=${Class.name.toLowerCase()}]`
         const result = map.call(
             this.element.querySelectorAll(selector),
-            element => Class.getInstance(element));
+            element => Class.getInstance(element))
 
         if(typeof filter === 'string') {
-            filter = instance => instance[filter] === value;
+            filter = instance => instance[filter] === value
         }
-        return filter? result.filter(filter) : result;
+        return filter? result.filter(filter) : result
     }
 
     /**
@@ -124,18 +124,18 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance} found instance
      */
     closest(Class, filter, value) {
-        const selector = `[data-instance=${Class.name}]`;
+        const selector = `[role~=${Class.name.toLowerCase()}]`
         if(typeof filter === 'string') {
-            filter = instance => instance[filter] === value;
+            filter = instance => instance[filter] === value
         }
-        let instance = this;
+        let instance = this
         do {
-            const parent = instance.element.parentElement;
-            if(!parent) return null;
-            const closest = parent.closest(selector);
-            instance = Class.getInstance(closest);
-        } while(instance && filter && !filter(instance));
-        return instance;
+            const parent = instance.element.parentElement
+            if(!parent) return null
+            const closest = parent.closest(selector)
+            instance = Class.getInstance(closest)
+        } while(instance && filter && !filter(instance))
+        return instance
     }
 
     /**
@@ -144,10 +144,10 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance|null}
      */
     static getInstance(element) {
-        const dataset = element && element.dataset;
-        return dataset && dataset.instance === this.name?
+        const role = element && element.getAttribute('role')
+        return role && role.split(' ').includes(this.name.toLowerCase())?
             element.instance || new this(element) :
-            null;
+            null
     }
 
     /**
@@ -156,9 +156,9 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance|null}
      */
     static closestInstance(element) {
-        const selector = `[data-instance=${this.name}]`;
-        const closest = element.closest(selector);
-        return this.getInstance(closest);
+        const selector = `[role~=${this.name.toLowerCase()}]`
+        const closest = element.closest(selector)
+        return this.getInstance(closest)
     }
 
     /**
@@ -169,8 +169,8 @@ export class Instance extends ARIADOMAssembler {
      */
     static on(type, listener, context = this) {
         document.addEventListener(type, event => {
-            const instance = context.closestInstance(event.target);
-            if(instance) listener.call(instance, event);
-        }, true);
+            const instance = context.closestInstance(event.target)
+            if(instance) listener.call(instance, event)
+        }, true)
     }
 }
