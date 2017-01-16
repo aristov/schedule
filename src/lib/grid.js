@@ -1,4 +1,4 @@
-import { span } from 'htmlmodule'
+import { span, input } from 'htmlmodule'
 import { NodeInit } from 'htmlmodule/lib/nodeinit'
 import { Instance } from './Instance'
 import { ENTER, ESCAPE, SPACE, BACKSPACE, ARROWS, DIGITS, LETTERS } from './keyCodes'
@@ -164,18 +164,18 @@ export class GridCell extends Instance {
             className : 'gridcell',
             tabIndex : -1,
         })
+        this.init({
+            onfocus : this.onFocus.bind(this),
+            onblur : this.onBlur.bind(this),
+            onclick : this.onClick.bind(this),
+            ondblclick : this.onDoubleClick.bind(this),
+            onkeydown : this.onKeyDown.bind(this),
+            onmouseenter : this.onMouseEnter.bind(this),
+        })
         this.children = this.text = span({ className : 'text' })
         if(init) this.init(init)
-
-        this.mode = 'navigation'
         this.span = null
-
-        this.on('blur', this.onBlur)
-        this.on('click', this.onClick)
-        this.on('dblclick', this.onDoubleClick)
-        this.on('keydown', this.onKeyDown)
-
-        this.constructor.attachTo(this.element)
+        this.mode = 'navigation'
     }
     get grid() {
         return this.closest(Grid)
@@ -303,14 +303,15 @@ export class GridCell extends Instance {
     }
     get input() {
         const element = this.element
-        let input = element.querySelector('input')
-        if(!input) {
-            input = document.createElement('input')
-            input.hidden = true
-            element.appendChild(input)
+        let textbox = element.querySelector('input')
+        if(!textbox) {
+            element.appendChild(textbox =
+                input({
+                    hidden : true,
+                    onblur : this.onInputBlur.bind(this)
+                }))
         }
-        input.addEventListener('blur', this.onInputBlur.bind(this))
-        return input
+        return textbox
     }
     onInputBlur() {
         this.mode = 'navigation'
@@ -369,10 +370,10 @@ export class GridCell extends Instance {
             else this.value = ''
         }
     }
-    onEnterKeyDown({ ctrlKey }) {
+    onEnterKeyDown({ ctrlKey, metaKey }) {
         if(this.mode === 'navigation') {
             const grid = this.grid
-            if(ctrlKey) {
+            if(ctrlKey || metaKey) {
                 const selected = grid.selected
                 if(selected.length) {
                     const merged = selected.filter(cell => Boolean(cell.merged.length))

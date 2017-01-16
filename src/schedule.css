@@ -2,35 +2,77 @@ body
 {
     font: 20px "Courier New", Courier, monospace;
 }
-table
+table.grid
 {
     width: 100%;
     user-select: none;
     cursor: default;
+    background: rgba(0, 0, 0, 0.1);
 }
-table td
+table.grid td,
+table.grid th
+{
+    background: white;
+}
+table.grid td
 {
     width: 18%;
     text-align: center;
+    position: relative;
+    height: 25px;
 }
-table th
+table.grid th
 {
     color: rgba(0, 0, 0, 0.7);
 }
-table thead th
+table.grid thead tr
+{
+    background: rgba(255, 127, 255, 0.3)
+}
+table.grid thead th
 {
     padding: 20px;
 }
-table tbody th
+table.grid tbody
+{
+    position: relative;
+}
+table.grid tbody th
 {
     font-size: 16px;
     font-weight: normal;
 }
-table tbody tr:nth-child(2n + 1) td
+table.grid tbody tr:nth-child(4n + 3) td,
+table.grid tbody tr:nth-child(4n + 4) td,
+table.grid tbody tr:nth-child(4n + 3) th,
+table.grid tbody tr:nth-child(4n + 4) th
 {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(255, 255, 255, 0.7);
 }
-table tbody tr td[aria-selected=true]
+table.grid tbody tr:nth-child(2n + 1) th
 {
-    background: rgba(0, 255, 255, 0.2);
+    font-weight: bold;
+}
+table.grid tbody tr td[aria-selected=true]
+{
+    background: rgba(0, 255, 255, 1);
+}
+table.grid td input
+{
+    font: inherit;
+    background: transparent;
+    border: 0;
+    text-align: center;
+    position: absolute;
+    padding: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: inline-block;
+}
+table.grid td:focus
+{
+    z-index: 1;
 }
