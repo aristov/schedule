@@ -1,3 +1,4 @@
+import { NodeInit } from 'htmlmodule/lib/nodeinit'
 import { ARIADOMAssembler } from './ariaassembler'
 
 export class Grid extends ARIADOMAssembler {
@@ -17,7 +18,7 @@ export class Grid extends ARIADOMAssembler {
 }
 
 export function grid(init) {
-    return new Grid('table', init)
+    return new Grid('table', NodeInit(init))
 }
 
 
@@ -32,7 +33,7 @@ export class Row extends ARIADOMAssembler {
 }
 
 export function row(init) {
-    return new Row('tr', init)
+    return new Row('tr', NodeInit(init))
 }
 
 
@@ -42,11 +43,11 @@ export class GridCell extends ARIADOMAssembler {
         this.init({
             role : 'gridcell',
             className : 'gridcell',
-            tabIndex : -1,
+            tabIndex : 'tabIndex' in init? init.tabIndex : -1,
         })
     }
 }
 
 export function gridcell(init) {
-    return new GridCell('td', init)
+    return new GridCell('td', NodeInit(init))
 }

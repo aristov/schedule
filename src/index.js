@@ -1,15 +1,4 @@
 import { body } from 'htmlmodule'
-import { grid, row, gridcell } from './lib/grid'
+import { schedule } from './schedule'
 
-const schedule = grid({
-    id : 'myschedule',
-    children : [
-        row({
-            children : [
-                gridcell({ children : '1 x 1' })
-            ]
-        })
-    ]
-})
-
-document.body = body(schedule.node)
+document.body = body(schedule().node)

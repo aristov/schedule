@@ -1,36 +1,33 @@
-import { table, thead, tbody, tr, th, td } from 'htmlmodule'
-import { grid } from './lib/grid'
+import { thead, tbody, tr, th } from 'htmlmodule'
+import { grid, row, gridcell } from './lib/grid'
 
 const { prototype : { forEach } } = Array
 
-const hours = [/*0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, */12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+// const hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+const hours = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 const minutes = ['00', '30']
-const ARROW_KEYS = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft']
 
 export function schedule() {
-    return table({
-        onkeydown,
+    return grid({
         children : [
             thead(tr([th(), th('Neutral'), th('Do forte'), th('Do piano'), th('Sol'), th('Fa')])),
-            tbody(hours.map((hour, h) => minutes.map((minute, m) => tr([
+            tbody(hours.map((hour, h) => minutes.map((minute, m) => row([
                 th(hour + ':' + minute),
-                td({ tabIndex : h + m? -1 : 0 }),
-                td({ tabIndex : -1 }),
-                td({ tabIndex : -1 }),
-                td({ tabIndex : -1 }),
-                td({ tabIndex : -1 }),
+                gridcell({ tabIndex : h + m? -1 : 0 }),
+                gridcell({}),
+                gridcell({}),
+                gridcell({}),
+                gridcell({}),
             ]))))
         ]
     })
 }
 
-export const gridschedule = () => schedule()
-
 /*================================================================*/
 
 function onkeydown (event) {
     const { key, target, shiftKey } = event
-    if(target.tagName === 'TD' && ARROW_KEYS.includes(key)) {
+    if(target.tagName === 'TD' && key.startsWith('Arrow')) {
         const row = target.parentNode
         let newRow, newCell
         switch(key) {
