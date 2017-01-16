@@ -31,6 +31,7 @@ table.grid td
 table.grid th,
 table.grid td
 {
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
     min-height: 25px;
 }
 table.grid th
@@ -61,6 +62,11 @@ table.grid tbody tr:nth-child(4n + 4) th
 {
     background: rgba(255, 255, 255, 0.7);
 }
+table.grid tbody tr:nth-child(6n + 1) th,
+table.grid tbody tr:nth-child(6n + 1) td
+{
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
 table.grid tbody tr:nth-child(2n + 1) th
 {
     font-weight: bold;
@@ -90,8 +96,10 @@ table.grid td input:not[hidden]
 table.grid td:focus
 {
     z-index: 1;
+    font-weight: bold;
 }
 table.grid tbody tr.row td.gridcell[data-value]
 {
     background: #ff0;
+    border: 3px solid #84f;
 }
