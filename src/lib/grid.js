@@ -90,7 +90,7 @@ export default class Grid extends Instance {
     updateSelection(target) {
         const active = this.active
         this.unselect()
-        // console.log(target.node, active.node)
+        console.log(target.node, active.node)
         if(active && target !== active) {
             const rowStart = Math.min(active.row.index, target.row.index)
             const rowEnd = Math.max(active.row.index, target.row.index)

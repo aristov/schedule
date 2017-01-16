@@ -12,15 +12,22 @@ export function schedule() {
     return grid({
         multiselectable : 'true',
         children : [
-            thead(tr([th(), th('Neutral'), th('Do forte'), th('Do piano'), th('Sol'), th('Fa')])),
-            tbody(hours.map((hour, h) => minutes.map((minute, m) => row([
-                th(time(hour + ':' + minute)),
-                gridcell({}),
-                gridcell({}),
-                gridcell({}),
-                gridcell({}),
-                gridcell({}),
-            ]))))
+            thead(tr([
+                th(),
+                th('Neutral'),
+                th('Do forte'),
+                th('Do piano'),
+                th('Sol'),
+                th('Fa')])),
+            tbody(hours.map((hour, h) =>
+                minutes.map((minute, m) => row([
+                    th(time(hour + ':' + minute)),
+                    gridcell(),
+                    gridcell(),
+                    gridcell(),
+                    gridcell(),
+                    gridcell(),
+                ]))))
         ]
     })
 }

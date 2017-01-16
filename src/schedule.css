@@ -70,6 +70,9 @@ table.grid td input
     bottom: 0;
     left: 0;
     width: 100%;
+}
+table.grid td input:not[hidden]
+{
     display: inline-block;
 }
 table.grid td:focus
