@@ -9,11 +9,14 @@ const minutes = ['00', '30']
 
 export function schedule() {
     return grid({
+        // onkeydown,
+        multiselectable : 'true',
         children : [
             thead(tr([th(), th('Neutral'), th('Do forte'), th('Do piano'), th('Sol'), th('Fa')])),
             tbody(hours.map((hour, h) => minutes.map((minute, m) => row([
                 th(hour + ':' + minute),
-                gridcell({ tabIndex : h + m? -1 : 0 }),
+                // gridcell({ tabIndex : h + m? -1 : 0 }),
+                gridcell({}),
                 gridcell({}),
                 gridcell({}),
                 gridcell({}),
@@ -25,7 +28,7 @@ export function schedule() {
 
 /*================================================================*/
 
-function onkeydown (event) {
+function onkeydown(event) {
     const { key, target, shiftKey } = event
     if(target.tagName === 'TD' && key.startsWith('Arrow')) {
         const row = target.parentNode

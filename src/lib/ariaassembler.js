@@ -12,6 +12,7 @@ export class ARIADOMAssembler extends HTMLDOMAssembler {
             this.node = object
             if(init) this.init(init)
         }
+        if(this.node) this.node.assembler = this
     }
 
     set role(role) {
