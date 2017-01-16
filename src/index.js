@@ -1,4 +1,8 @@
 import { body } from 'htmlmodule'
 import { schedule } from './schedule'
 
-document.body = body(schedule().node)
+const app = schedule()
+
+document.body = body(app.node)
+
+

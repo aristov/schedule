@@ -16,6 +16,10 @@ export class GridCell extends Instance {
             role : 'gridcell',
             className : 'gridcell',
             tabIndex : -1,
+            children : [
+                span({ className : 'text' }),
+                input({ hidden : true })
+            ]
         })
         this.init({
             onfocus : this.onFocus.bind(this),
@@ -23,11 +27,9 @@ export class GridCell extends Instance {
             ondblclick : this.onDoubleClick.bind(this),
             onkeydown : this.onKeyDown.bind(this),
             onmouseenter : this.onMouseEnter.bind(this),
-            children : this.text = span({ className : 'text' })
         })
         if(init) this.init(init)
         this.span = null
-        this.mode = 'navigation'
     }
     get grid() {
         return this.closest(Grid)
@@ -35,8 +37,11 @@ export class GridCell extends Instance {
     get row() {
         return this.closest(Row)
     }
+    get text() {
+        return this.node.querySelector('.text')
+    }
     get mode() {
-        return this.element.dataset.mode
+        return this.element.dataset.mode || 'navigation'
     }
     set mode(mode) {
         if(mode !== this.mode && !this.readonly) {
@@ -151,16 +156,15 @@ export class GridCell extends Instance {
         return merged
     }
     get input() {
-        const element = this.element
-        let textbox = element.querySelector('input')
-        if(!textbox) {
-            element.appendChild(textbox =
-                input({
-                    hidden : true,
-                    onblur : this.onInputBlur.bind(this)
-                }))
+        return this.element.querySelector('input')
+    }
+    set rowSpan(rowSpan) {
+        const cells = [this]
+        let next = this
+        for(let i = 0; i < rowSpan; i++) {
+            cells.push(next = next.bottomSibling)
         }
-        return textbox
+        this.grid.merge(cells)
     }
     onInputBlur() {
         this.mode = 'navigation'
@@ -225,7 +229,10 @@ export class GridCell extends Instance {
                     const merged = selected.filter(cell => Boolean(cell.merged.length))
                     grid.unselect()
                     if(merged.length) merged.forEach(cell => cell.unmerge())
-                    else grid.merge(selected)
+                    else {
+                        grid.merge(selected)
+                        selected[0].mode = 'edit'
+                    }
                 } else this.unmerge()
             } else {
                 grid.unselect()

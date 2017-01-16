@@ -3,7 +3,7 @@ import { Instance } from './Instance'
 import { GridCell, gridcell } from './gridcell'
 import { Row, row } from './row'
 
-export { row, gridcell }
+export { row, gridcell, Row, GridCell }
 
 export class Grid extends Instance {
     constructor(element, init) {
@@ -66,7 +66,6 @@ export class Grid extends Instance {
         })
         first.element.colSpan = last.index - first.index + 1
         first.element.rowSpan = last.row.index - first.row.index + 1
-        first.mode = 'edit'
     }
     selectAll() {
         const rows = this.rows
