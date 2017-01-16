@@ -189,13 +189,12 @@ export class GridCell extends Instance {
             const input = this.input
             const text = this.text
             if(mode === 'edit') {
-                this.input.value = text.textContent
                 text.hidden = true
                 input.hidden = false
                 input.focus()
                 element.classList.add('focus')
             } else {
-                text.textContent = input.value
+                this.value = input.value
                 input.hidden = true
                 text.hidden = false
                 element.classList.remove('focus')
@@ -235,6 +234,9 @@ export class GridCell extends Instance {
     }
     set value(value) {
         this.input.value = this.text.textContent = value
+        const { element } = this
+        if(value) element.dataset.value = value
+        else element.removeAttribute('data-value')
     }
     get value() {
         return this.input.value

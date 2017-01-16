@@ -79,3 +79,7 @@ table.grid td:focus
 {
     z-index: 1;
 }
+table.grid tbody tr.row td.gridcell[data-value]
+{
+    background: #ff0;
+}
