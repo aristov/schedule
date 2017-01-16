@@ -29,23 +29,23 @@ export class Instance extends ARIADOMAssembler {
 
     /**
      * Set hidden state
-     * @param {String} hidden state
+     * @param {Boolean} hidden state
      */
     set hidden(hidden) {
-        this.element.hidden = hidden === 'true'
+        this.element.hidden = hidden
     }
 
     /**
      * Get hidden state
-     * @returns {String}
+     * @returns {Boolean}
      */
     get hidden() {
-        return String(this.element.hidden)
+        return this.element.hidden
     }
 
     /**
      * Set disabled state
-     * @param {String} disabled state
+     * @param {Boolean} disabled state
      */
     set disabled(disabled) {
         this.element.setAttribute('aria-disabled', disabled)
@@ -53,22 +53,10 @@ export class Instance extends ARIADOMAssembler {
 
     /**
      * Get disabled state
-     * @returns {String}
+     * @returns {Boolean}
      */
     get disabled() {
-        return this.element.getAttribute('aria-disabled') || 'false'
-    }
-
-    /**
-     * Add event listener
-     * @param {String} type event type
-     * @param {Function} listener event listener
-     * @param {Object} [context = this] event listener context
-     * @returns {Instance} this
-     */
-    on(type, listener, context = this) {
-        this.element.addEventListener(type, listener.bind(context))
-        return this
+        return this.element.getAttribute('aria-disabled') === 'true'
     }
 
     /**

@@ -35,8 +35,8 @@ export default class Grid extends Instance {
     set disabled(disabled) {
         super.disabled = disabled
         this.cells.forEach((cell, i) => {
-            if(disabled === 'true') cell.element.removeAttribute('tabindex')
-            else if(cell.disabled !== 'true') cell.element.tabIndex = i? -1 : 0
+            if(disabled) cell.element.removeAttribute('tabindex')
+            else if(!cell.disabled) cell.element.tabIndex = i? -1 : 0
         })
     }
     get active() {
@@ -53,14 +53,13 @@ export default class Grid extends Instance {
     merge(cells) {
         const first = cells[0]
         const last = cells[cells.length - 1]
-        // first.merged = []
         cells.forEach(cell => {
             cell.selected = 'false'
             if(cell !== first) {
                 first.merged.push(cell)
                 cell.span = first
                 cell.value = ''
-                cell.hidden = 'true'
+                cell.hidden = true
             }
         })
         first.element.colSpan = last.index - first.index + 1
@@ -90,7 +89,6 @@ export default class Grid extends Instance {
     updateSelection(target) {
         const active = this.active
         this.unselect()
-        console.log(target.node, active.node)
         if(active && target !== active) {
             const rowStart = Math.min(active.row.index, target.row.index)
             const rowEnd = Math.max(active.row.index, target.row.index)
@@ -166,13 +164,12 @@ export class GridCell extends Instance {
         })
         this.init({
             onfocus : this.onFocus.bind(this),
-            onblur : this.onBlur.bind(this),
             onclick : this.onClick.bind(this),
             ondblclick : this.onDoubleClick.bind(this),
             onkeydown : this.onKeyDown.bind(this),
             onmouseenter : this.onMouseEnter.bind(this),
+            children : this.text = span({ className : 'text' })
         })
-        this.children = this.text = span({ className : 'text' })
         if(init) this.init(init)
         this.span = null
         this.mode = 'navigation'
@@ -187,7 +184,7 @@ export class GridCell extends Instance {
         return this.element.dataset.mode
     }
     set mode(mode) {
-        if(mode !== this.mode && this.readonly !== 'true') {
+        if(mode !== this.mode && !this.readonly) {
             const element = this.element
             const input = this.input
             const text = this.text
@@ -216,7 +213,7 @@ export class GridCell extends Instance {
         this.element.setAttribute('aria-readonly', readonly)
     }
     get readonly() {
-        return this.element.getAttribute('aria-readonly') || 'false'
+        return this.element.getAttribute('aria-readonly') === 'true'
     }
     set selected(selected) {
         if(this.grid.multiselectable || this.selected) {
@@ -229,13 +226,12 @@ export class GridCell extends Instance {
     set disabled(disabled) {
         const element = this.element
         element.setAttribute('aria-disabled', disabled)
-        if(disabled === 'true') element.removeAttribute('tabindex')
+        if(disabled) element.removeAttribute('tabindex')
         else element.tabIndex = -1
     }
     get disabled() {
-        return this.grid.disabled === 'true'?
-            'true' :
-            this.element.getAttribute('aria-disabled') || 'false'
+        return this.grid.disabled ||
+            this.element.getAttribute('aria-disabled') === 'true'
     }
     set value(value) {
         this.input.value = this.text.textContent = value
@@ -275,10 +271,6 @@ export class GridCell extends Instance {
     get column() {
         return this.grid.cells.filter(cell => cell.index === this.index)
     }
-    /*set merged(merged) {
-        this.element.rowSpan = 1
-        this.element.colSpan = 1
-    }*/
     get merged() {
         const element = this.element
         const rowSpan = element.rowSpan
@@ -320,16 +312,13 @@ export class GridCell extends Instance {
         this.span? this.span.focus() : this.element.focus()
     }
     onClick() {
-        if(this.mode === 'navigation' && this.disabled === 'false') {
+        if(this.mode === 'navigation' && !this.disabled) {
             this.grid.unselect()
             this.selected = 'true'
         }
     }
     onFocus() {
         this.grid.active = this
-    }
-    onBlur() {
-        // this.grid.unselect()
     }
     onMouseEnter({ buttons }) {
         const grid = this.grid
@@ -353,7 +342,7 @@ export class GridCell extends Instance {
             }
         }
         else if([SPACE, ...DIGIT_CODES, ...LETTER_CODES].includes(keyCode)) {
-            if(keyCode === SPACE && this.readonly === 'true' && this.selected && this.disabled === 'false') {
+            if(keyCode === SPACE && this.readonly && this.selected && !this.disabled) {
                 event.preventDefault()
                 this.grid.unselect()
                 this.selected = 'true'
@@ -363,7 +352,7 @@ export class GridCell extends Instance {
         }
     }
     onBackspaceKeyDown(event) {
-        if(this.readonly === 'false' && this.mode === 'navigation') {
+        if(!this.readonly && this.mode === 'navigation') {
             event.preventDefault()
             const selected = this.grid.selected
             if(selected.length) selected.forEach(cell => cell.value = '')
@@ -396,7 +385,7 @@ export class GridCell extends Instance {
             let cell
             while(cell = merged.pop()) {
                 cell.span = null
-                cell.hidden = 'false'
+                cell.hidden = false
             }
             const element = this.element
             element.rowSpan = 1
@@ -443,16 +432,6 @@ export class GridCell extends Instance {
                 }
             } else target.focus()
         }
-    }
-    static attachTo(node) {
-        node.addEventListener('focus', event => {
-            const gridcell = this.getInstance(event.target)
-            if(gridcell) gridcell.onFocus(event)
-        }, true)
-        node.addEventListener('mouseenter', event => {
-            const gridcell = this.getInstance(event.target)
-            if(gridcell) gridcell.onMouseEnter(event)
-        }, true)
     }
 }
 
