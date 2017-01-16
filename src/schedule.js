@@ -11,14 +11,15 @@ export function time(init) {
 export function schedule() {
     return grid({
         multiselectable : 'true',
+        // onchange : (event) => { console.log(event) },
         children : [
             thead(tr([
                 th(),
-                th('Neutral'),
+                th('Neo hall'),
                 th('Do forte'),
                 th('Do piano'),
-                th('Sol'),
-                th('Fa')])),
+                th('Sol studio'),
+                th('Fa studio')])),
             tbody(hours.map((hour, h) =>
                 minutes.map((minute, m) => row([
                     th(time(hour + ':' + minute)),

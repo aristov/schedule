@@ -19,6 +19,10 @@ table.grid td
     width: 18%;
     text-align: center;
     position: relative;
+}
+table.grid th,
+table.grid td
+{
     height: 25px;
 }
 table.grid th

@@ -132,33 +132,10 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance|null}
      */
     static getInstance(element) {
-        const role = element && element.getAttribute('role')
-        return role && role.split(' ').includes(this.name.toLowerCase())?
-            element.instance || new this(element) :
-            null
+        return element.instance || new this(element)
     }
 
-    /**
-     * Create if needed and return the nearest ancestor instance of the specified element
-     * @param {Element} element node inside target instance
-     * @returns {Instance|null}
-     */
-    static closestInstance(element) {
-        const selector = `[role~=${this.name.toLowerCase()}]`
-        const closest = element.closest(selector)
-        return this.getInstance(closest)
-    }
-
-    /**
-     * Delegate an event listener to the document node
-     * @param {String} type event type
-     * @param {Function} listener event listener
-     * @param {Object} [context=this] event listener context
-     */
-    static on(type, listener, context = this) {
-        document.addEventListener(type, event => {
-            const instance = context.closestInstance(event.target)
-            if(instance) listener.call(instance, event)
-        }, true)
+    static get selector() {
+        return `[role~=${this.name.toLowerCase()}]`
     }
 }
