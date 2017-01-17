@@ -290,11 +290,11 @@ export class GridCell extends Instance {
     onDoubleClick() {
         this.mode = 'edit'
     }
-    onArrowKeyDown({ keyCode, ctrlKey, shiftKey, metaKey }) {
+    onArrowKeyDown({ keyCode, ctrlKey, shiftKey, metaKey, altKey }) {
         const grid = this.grid
         const current = shiftKey && grid.selection || this
         let target
-        if(ctrlKey) {
+        if(ctrlKey || metaKey) {
             const rowCells = current.row.cells
             const column = current.column
             switch(keyCode) {
@@ -303,7 +303,7 @@ export class GridCell extends Instance {
                 case RIGHT: target = rowCells[rowCells.length - 1]; break
                 case DOWN: target = column[column.length - 1]; break
             }
-        } else if(metaKey) {
+        } else if(altKey) {
             switch(keyCode) {
                 case UP: this.replaceWith(this.topSibling); break
                 case DOWN: this.replaceWith(this.bottomSibling); break
