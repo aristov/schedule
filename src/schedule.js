@@ -74,8 +74,7 @@ export class Schedule extends Grid {
 
     saveJSON() {
         if(!this.loading) {
-            const filter = ({ value }) => Boolean(value)
-            const datacells = this.findAll(GridCell, filter)
+            const datacells = this.findAll(GridCell, ({ value }) => Boolean(value))
             const data = datacells.map(({ value, row, node, index }) => {
                 return {
                     value,
@@ -90,8 +89,7 @@ export class Schedule extends Grid {
 
     saveXML() {
         if(!this.loading) {
-            const filter = ({ value }) => Boolean(value)
-            const datacells = this.findAll(GridCell, filter)
+            const datacells = this.findAll(GridCell, ({ value }) => Boolean(value))
             const xml = xmldom('schedule',
                 datacells.map(({ value, row, node, index }) => {
                     return xmldom('session', {

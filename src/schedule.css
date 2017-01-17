@@ -38,9 +38,9 @@ table.grid th
 {
     color: rgba(0, 0, 0, 0.7);
 }
-table.grid thead tr
+table.grid thead tr th
 {
-    background: rgba(255, 127, 255, 0.3)
+    background: rgba(255, 255, 255, 0.5);
 }
 table.grid thead th
 {
