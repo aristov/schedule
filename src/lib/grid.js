@@ -113,7 +113,6 @@ export class Grid extends Instance {
                 let cells = rows[i].cells
                 for(let j = colStart; j <= colEnd; j++) {
                     let cell = cells[j]
-                    // if(cell.span || cell.merged.length) { merged = true; break } else
                     cell.selected = 'true'
                 }
                 if(merged) break
