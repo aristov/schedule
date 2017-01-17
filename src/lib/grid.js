@@ -47,7 +47,7 @@ export class Grid extends Instance {
     set activeCell(cell) {
         const active = this.activeCell
         if(active) active.active = false
-        cell.active = true
+        if(cell) cell.active = true
     }
     unselect() {
         this.selected.forEach(cell => cell.selected = 'false')

@@ -11,8 +11,8 @@ const DIGIT_CODES = Object.values(DIGITS)
 const LETTER_CODES = Object.values(LETTERS)
 
 export class GridCell extends Instance {
-    constructor(element, init) {
-        super(element, {
+    constructor(object, init) {
+        super(object, {
             role : 'gridcell',
             className : 'gridcell',
             tabIndex : -1,

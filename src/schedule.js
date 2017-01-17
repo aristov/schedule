@@ -1,26 +1,9 @@
 import { thead, tbody, tr, th, htmldom } from 'htmlmodule'
-import { grid, row, gridcell, GridCell, Row } from './lib/grid'
+import { Grid, GridCell, row, gridcell } from './lib/grid'
 
-const hours = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-const minutes = ['00', '30']
-
-const rows = {}
-hours.forEach((hour, i) =>
-    minutes.forEach((minute, j) => {
-        rows[[hour, minute].join(':')] = 2 * i + j
-    }))
-
-export function time(init) {
-    return htmldom('time', init)
-}
-
-export class TimeRow extends Row {
-    get time() {
-        return this.node.querySelector('time')
-    }
-}
-
-const rooms = [
+const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+const MINUTES = ['00', '30']
+const ROOMS = [
     'Neo hall',
     'Do forte',
     'Do piano',
@@ -28,59 +11,86 @@ const rooms = [
     'Fa studio'
 ]
 
-export function schedule() {
-    const datenow = new Date
-    const schedulegrid = grid({
-        multiselectable : 'true',
-        children : [
-            thead(tr([
-                th(datenow.getDate() + '/' + datenow.getMonth() + 1),
-                ...rooms.map(room => th(room))
-            ])),
-            tbody(hours.map((hour, h) =>
-                minutes.map((minute, m) => {
+export function time(init) {
+    return htmldom('time', init)
+}
+
+export class Schedule extends Grid {
+    constructor(object, init) {
+        super(object)
+        this.datenow = new Date
+        this.init({
+            multiselectable : true,
+            onchange : () => this.saveJSON(),
+            children : [this.head, this.body]
+        })
+        this.init(init)
+    }
+    get head() {
+        const datenow = this.datenow
+        return thead(tr([
+            th([
+                datenow.getDate(),
+                datenow.getMonth() + 1
+            ].join('/')),
+            ...this.rooms.map(room => th(room))
+        ]))
+    }
+    get body() {
+        const datenow = this.datenow
+        return tbody(HOURS.map(hour =>
+            MINUTES.map(minute => {
                 const hournow = datenow.getHours() === hour
                 const minutesnow = datenow.getMinutes()
                 const minutenow = minutesnow > minute && minutesnow <= minute + 30
                 return row({
-                    attributes : {
-                        'aria-current' : hournow && minutenow? 'time' : undefined
-                    },
+                    aria : { current : hournow && minutenow? 'time' : undefined },
                     children : [
                         th(time(hour + ':' + minute)),
-                        gridcell(),
-                        gridcell(),
-                        gridcell(),
-                        gridcell(),
-                        gridcell(),
+                        ...this.rooms.map(() => gridcell())
                     ]
                 })
             })))
-        ]
-    })
-    JSON.parse(localStorage.getItem('data')).forEach(timesession => {
-        const rowIndex = rows[timesession.time]
-        const colIndex = rooms.indexOf(timesession.room)
-        const cell = schedulegrid.rows[rowIndex].cells[colIndex]
-        cell.value = timesession.value
-        cell.rowSpan = timesession.duration / 30 - 1
-        cell.tabIndex = 0
-    })
-    schedulegrid.init({
-        onchange : (event) => {
-            console.log(event)
-            const filter = ({ value }) => Boolean(value)
-            const datacells = schedulegrid.findAll(GridCell, filter)
-            const data = datacells.map(({ value, row, node, index }) => {
-                return {
-                    value,
-                    time : row.node.querySelector('time').innerHTML,
-                    duration : node.rowSpan * 30,
-                    room : rooms[index]
-                }
+    }
+    get rooms() {
+        return ROOMS
+    }
+    get timerows() {
+        const rows = {}
+        HOURS.forEach((hour, i) =>
+            MINUTES.forEach((minute, j) => {
+                rows[[hour, minute].join(':')] = 2 * i + j
+            }))
+        return rows
+    }
+    saveJSON() {
+        const filter = ({ value }) => Boolean(value)
+        const datacells = this.findAll(GridCell, filter)
+        const data = datacells.map(({ value, row, node, index }) => {
+            return {
+                value,
+                time : row.node.querySelector('time').innerHTML,
+                duration : node.rowSpan * 30,
+                room : this.rooms[index]
+            }
+        })
+        localStorage.setItem('data', JSON.stringify(data))
+    }
+    loadJSON() {
+        JSON.parse(localStorage.getItem('data'))
+            .forEach(session => {
+                const rowIndex = this.timerows[session.time]
+                const colIndex = this.rooms.indexOf(session.room)
+                const cell = this.rows[rowIndex].cells[colIndex]
+                cell.value = session.value
+                cell.rowSpan = session.duration / 30 - 1
+                cell.tabIndex = 0
             })
-            localStorage.setItem('data', JSON.stringify(data))
-        }
-    })
-    return schedulegrid
+    }
+}
+
+export function schedule(init) {
+    const instance = new Schedule('table', init)
+    instance.loadJSON()
+    return instance
 }
