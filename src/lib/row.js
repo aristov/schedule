@@ -11,6 +11,12 @@ export class Row extends Instance {
         })
         if(init) this.init(init)
     }
+    set multiselectable(multiselectable) {
+        this.element.setAttribute('aria-multiselectable', multiselectable)
+    }
+    get multiselectable() {
+        return this.element.getAttribute('aria-multiselectable') === 'true'
+    }
     get grid() {
         return this.closest(Grid)
     }

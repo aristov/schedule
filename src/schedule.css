@@ -101,5 +101,10 @@ table.grid tbody tr.row td.gridcell[data-value]
 }
 table.grid tbody tr.row td.gridcell[aria-selected=true]
 {
-    background: rgba(0, 255, 255, 1);
+    background: rgba(255, 255, 187, 1);
+}
+table.grid tbody tr.row[aria-current=time] td,
+table.grid tbody tr.row[aria-current=time] th
+{
+    background: rgba(127, 255, 255, 1);
 }

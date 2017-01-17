@@ -38,14 +38,24 @@ export function schedule() {
                 ...rooms.map(room => th(room))
             ])),
             tbody(hours.map((hour, h) =>
-                minutes.map((minute, m) => row([
-                    th(time(hour + ':' + minute)),
-                    gridcell(),
-                    gridcell(),
-                    gridcell(),
-                    gridcell(),
-                    gridcell(),
-                ]))))
+                minutes.map((minute, m) => {
+                const hournow = datenow.getHours() === hour
+                const minutesnow = datenow.getMinutes()
+                const minutenow = minutesnow > minute && minutesnow <= minute + 30
+                return row({
+                    attributes : {
+                        'aria-current' : hournow && minutenow? 'time' : undefined
+                    },
+                    children : [
+                        th(time(hour + ':' + minute)),
+                        gridcell(),
+                        gridcell(),
+                        gridcell(),
+                        gridcell(),
+                        gridcell(),
+                    ]
+                })
+            })))
         ]
     })
     JSON.parse(localStorage.getItem('data')).forEach(timesession => {

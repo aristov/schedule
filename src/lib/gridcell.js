@@ -190,7 +190,7 @@ export class GridCell extends Instance {
     }
     onMouseEnter({ buttons }) {
         const grid = this.grid
-        if(buttons === 1 && grid.multiselectable === 'true') {
+        if(buttons === 1 && grid.multiselectable) {
             grid.updateSelection(this)
         }
     }
@@ -227,7 +227,7 @@ export class GridCell extends Instance {
         if(!event.metaKey && !event.ctrlKey) this.mode = 'edit'
     }
     onSelectAllKeyDown(event) {
-        if(this.mode === 'navigation' && this.grid.multiselectable === 'true') {
+        if(this.mode === 'navigation' && this.grid.multiselectable) {
             event.preventDefault()
             this.grid.selectAll()
         }
@@ -245,20 +245,33 @@ export class GridCell extends Instance {
             activeCell.value = ''
         }
     }
-    onEnterKeyDown() {
+    onEnterKeyDown({ metaKey }) {
         if(this.mode === 'navigation') {
             const grid = this.grid
             const selected = grid.selected
+            const cells = []
             if(selected.length) {
-                const merged = selected.filter(cell => Boolean(cell.merged.length))
                 grid.unselect()
-                if(merged.length) merged.forEach(cell => cell.unmerge())
-                else {
-                    grid.merge(selected)
-                }
+                selected.forEach(cell => {
+                    cells.push(cell)
+                    if(cell.merged.length) {
+                        cell.merged.forEach(mergedCell => {
+                            cells.push(mergedCell)
+                        })
+                        cell.unmerge()
+                    }
+                })
+                console.log(cells)
+                grid.merge(cells)
+                grid.activeCell = cells[0]
+                grid.activeCell.focus()
+                grid.activeCell.mode = 'edit'
             }
-            else if(this.value) this.mode = 'edit'
+            else if(this.value) {
+                if(metaKey) this.unmerge()
+            }
             else if(this.merged.length) this.unmerge()
+            this.mode = 'edit'
         } else {
             this.mode = 'navigation'
             this.element.focus()
@@ -296,14 +309,9 @@ export class GridCell extends Instance {
             }
         }
         if(target) {
-            if(grid.multiselectable === 'true') {
+            if(grid.multiselectable) {
                 if(shiftKey) {
-                    if([UP, DOWN].includes(keyCode) &&
-                        grid.activeCell.index === target.index &&
-                        target.colSpan === 1 && target.merged.length) {
-                            target.selected = 'true'
-                    }
-                    else grid.updateSelection(target)
+                    grid.updateSelection(target)
                 }
                 else {
                     grid.unselect()

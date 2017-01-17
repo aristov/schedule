@@ -22,11 +22,11 @@ export class Grid extends Instance {
     get cells() {
         return this.findAll(GridCell)
     }
-    get multiselectable() {
-        return this.element.getAttribute('aria-multiselectable') || 'false'
-    }
     set multiselectable(multiselectable) {
         this.element.setAttribute('aria-multiselectable', multiselectable)
+    }
+    get multiselectable() {
+        return this.element.getAttribute('aria-multiselectable') === 'true'
     }
     get selected() {
         return this.cells.filter(cell => cell.selected === 'true')
@@ -56,17 +56,22 @@ export class Grid extends Instance {
     merge(cells) {
         const first = cells[0]
         const last = cells[cells.length - 1]
+        let value = first.value
         cells.forEach(cell => {
             cell.selected = 'false'
             if(cell !== first) {
                 first.merged.push(cell)
                 cell.span = first
+                if(cell.value && cell.value !== value) {
+                    value += ' + ' + cell.value
+                }
                 cell.value = ''
                 cell.hidden = true
             }
         })
         first.element.colSpan = last.index - first.index + 1
         first.element.rowSpan = last.row.index - first.row.index + 1
+        first.value = value
         if(first.value) first.emit('change')
     }
     selectAll() {
@@ -93,21 +98,23 @@ export class Grid extends Instance {
         const activeCell = this.activeCell
         this.unselect()
         if(activeCell && target !== activeCell) {
-            const rowStart = Math.min(activeCell.row.index, target.row.index)
-            const rowEnd = Math.max(activeCell.row.index, target.row.index)
-            const colStart = Math.min(activeCell.index, target.index)
-            const colEnd = Math.max(activeCell.index, target.index)
+            const activeRow = activeCell.row
+            const rowStart = Math.min(activeRow.index, target.row.index)
+            const rowEnd = Math.max(activeRow.index, target.row.index)
+            const colStart = activeRow.multiselectable?
+                Math.min(activeCell.index, target.index) :
+                activeCell.index
+            const colEnd = activeRow.multiselectable?
+                Math.max(activeCell.index, target.index) :
+                activeCell.index
             const rows = this.rows
             let merged = false
             for(let i = rowStart; i <= rowEnd; i++) {
                 let cells = rows[i].cells
                 for(let j = colStart; j <= colEnd; j++) {
                     let cell = cells[j]
-                    if(cell.span || cell.merged.length) {
-                        merged = true
-                        break
-                    }
-                    else cell.selected = 'true'
+                    // if(cell.span || cell.merged.length) { merged = true; break } else
+                    cell.selected = 'true'
                 }
                 if(merged) break
             }
