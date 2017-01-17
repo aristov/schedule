@@ -23,6 +23,7 @@ export class GridCell extends Instance {
         })
         this.init({
             onfocus : this.onFocus.bind(this),
+            onblur : this.onBlur.bind(this),
             onclick : this.onClick.bind(this),
             ondblclick : this.onDoubleClick.bind(this),
             onkeydown : this.onKeyDown.bind(this),
@@ -176,6 +177,9 @@ export class GridCell extends Instance {
     get colSpan() {
         return this.node.colSpan
     }
+    onBlur() {
+        this.mode = 'navigation'
+    }
     onInputBlur() {
         this.mode = 'navigation'
     }
@@ -261,7 +265,6 @@ export class GridCell extends Instance {
                         cell.unmerge()
                     }
                 })
-                console.log(cells)
                 grid.merge(cells)
                 grid.activeCell = cells[0]
                 grid.activeCell.focus()
@@ -291,7 +294,7 @@ export class GridCell extends Instance {
         const grid = this.grid
         const current = shiftKey && grid.selection || this
         let target
-        if(ctrlKey || metaKey) {
+        if(ctrlKey) {
             const rowCells = current.row.cells
             const column = current.column
             switch(keyCode) {
@@ -299,6 +302,13 @@ export class GridCell extends Instance {
                 case UP: target = column[0]; break
                 case RIGHT: target = rowCells[rowCells.length - 1]; break
                 case DOWN: target = column[column.length - 1]; break
+            }
+        } else if(metaKey) {
+            switch(keyCode) {
+                case UP: this.replaceWith(this.topSibling); break
+                case DOWN: this.replaceWith(this.bottomSibling); break
+                case LEFT: this.replaceWith(this.leftSibling); break
+                case RIGHT: this.replaceWith(this.rightSibling); break
             }
         } else {
             switch(keyCode) {
@@ -318,6 +328,23 @@ export class GridCell extends Instance {
                     target.focus()
                 }
             } else target.focus()
+        }
+    }
+    replaceWith(cell) {
+        if(this.value && cell) {
+            if(this.merged) this.unmerge()
+            if(cell.merged) cell.unmerge()
+            const rows = this.grid.rows
+            const index1 = this.row.index
+            const index2 = cell.row.index
+            const row1 = rows[index1].node
+            const row2 = rows[index2].node
+            const ref1 = this.node.nextSibling
+            const ref2 = cell.node.nextSibling
+            row1.insertBefore(cell.node, ref1)
+            row2.insertBefore(this.node, ref2)
+            this.focus()
+            this.emit('change')
         }
     }
     focus() {
