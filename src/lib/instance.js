@@ -66,7 +66,7 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance} this
      */
     emit(type, init = { bubbles : true, cancelable : true }) {
-        const event = new Event(type, init)
+        const event = new CustomEvent(type, init)
         this.element.dispatchEvent(event)
         return this
     }
@@ -136,6 +136,6 @@ export class Instance extends ARIADOMAssembler {
     }
 
     static get selector() {
-        return `[role~=${this.name.toLowerCase()}]`
+        return `[role~=${ this.name.toLowerCase() }]`
     }
 }

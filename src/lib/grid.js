@@ -14,7 +14,7 @@ export class Grid extends Instance {
         })
         if(init) this.init(init)
         this.selection = null
-        this.cells[0].active = 'true'
+        this.activeCell = this.cells[0]
     }
     get rows() {
         return this.findAll(Row)
@@ -41,12 +41,13 @@ export class Grid extends Instance {
             else if(!cell.disabled) cell.element.tabIndex = i? -1 : 0
         })
     }
-    get active() {
-        return this.find(GridCell, ({ active }) => active === 'true')
+    get activeCell() {
+        return this.find(GridCell, ({ active }) => active)
     }
-    set active(cell) {
-        this.active.active = 'false'
-        cell.active = 'true'
+    set activeCell(cell) {
+        const active = this.activeCell
+        if(active) active.active = false
+        cell.active = true
     }
     unselect() {
         this.selected.forEach(cell => cell.selected = 'false')
@@ -66,6 +67,7 @@ export class Grid extends Instance {
         })
         first.element.colSpan = last.index - first.index + 1
         first.element.rowSpan = last.row.index - first.row.index + 1
+        if(first.value) first.emit('change')
     }
     selectAll() {
         const rows = this.rows
@@ -75,26 +77,26 @@ export class Grid extends Instance {
         const topRightCell = firstRowCells[firstRowCells.length - 1]
         const bottomLeftCell = lastRowCells[0]
         const bottomRightCell = lastRowCells[lastRowCells.length - 1]
-        const active = this.active
+        const activeCell = this.activeCell
         let selection
         this.cells.forEach(cell => cell.selected = 'true')
-        switch(active) {
+        switch(activeCell) {
             case topLeftCell : selection = bottomRightCell; break
             case topRightCell : selection = bottomLeftCell; break
             case bottomLeftCell : selection = topRightCell; break
             case bottomRightCell : selection = topLeftCell; break
-            default : selection = active
+            default : selection = activeCell
         }
         this.selection = selection
     }
     updateSelection(target) {
-        const active = this.active
+        const activeCell = this.activeCell
         this.unselect()
-        if(active && target !== active) {
-            const rowStart = Math.min(active.row.index, target.row.index)
-            const rowEnd = Math.max(active.row.index, target.row.index)
-            const colStart = Math.min(active.index, target.index)
-            const colEnd = Math.max(active.index, target.index)
+        if(activeCell && target !== activeCell) {
+            const rowStart = Math.min(activeCell.row.index, target.row.index)
+            const rowEnd = Math.max(activeCell.row.index, target.row.index)
+            const colStart = Math.min(activeCell.index, target.index)
+            const colEnd = Math.max(activeCell.index, target.index)
             const rows = this.rows
             let merged = false
             for(let i = rowStart; i <= rowEnd; i++) {
@@ -104,12 +106,12 @@ export class Grid extends Instance {
                     if(cell.span || cell.merged.length) {
                         merged = true
                         break
-                    } else cell.selected = 'true'
+                    }
+                    else cell.selected = 'true'
                 }
                 if(merged) break
             }
-            if(merged) this.selectAll()
-            else this.selection = target
+            if(!merged) this.selection = target
         }
     }
 }

@@ -93,19 +93,23 @@ export class GridCell extends Instance {
             this.element.getAttribute('aria-disabled') === 'true'
     }
     set value(value) {
+        const _value = this.value
         this.input.value = this.text.textContent = value
         const { element } = this
         if(value) element.dataset.value = value
         else element.removeAttribute('data-value')
+        if(_value !== value) this.emit('change')
     }
     get value() {
         return this.input.value
     }
     set active(active) {
-        this.element.tabIndex = active === 'true'? 0 : -1
+        const { node } = this
+        node.tabIndex = active? 0 : this.value? 0 : -1
+        node.classList.toggle('active', active)
     }
     get active() {
-        return String(this.element.tabIndex === 0)
+        return this.node.classList.contains('active')
     }
     set current(current) {
         this.element.setAttribute('aria-current', current)
@@ -166,11 +170,14 @@ export class GridCell extends Instance {
         }
         this.grid.merge(cells)
     }
+    get rowSpan() {
+        return this.node.rowSpan
+    }
+    get colSpan() {
+        return this.node.colSpan
+    }
     onInputBlur() {
         this.mode = 'navigation'
-    }
-    focus() {
-        this.span? this.span.focus() : this.element.focus()
     }
     onClick() {
         if(this.mode === 'navigation' && !this.disabled) {
@@ -179,7 +186,7 @@ export class GridCell extends Instance {
         }
     }
     onFocus() {
-        this.grid.active = this
+        this.grid.activeCell = this
     }
     onMouseEnter({ buttons }) {
         const grid = this.grid
@@ -189,71 +196,72 @@ export class GridCell extends Instance {
     }
     onKeyDown(event) {
         const keyCode = event.keyCode
-        if(keyCode === ENTER) this.onEnterKeyDown(event)
-        else if(keyCode === ESCAPE) this.onEscapeKeyDown(event)
+        if(keyCode === ENTER) {
+            this.onEnterKeyDown(event)
+        }
+        else if(keyCode === ESCAPE) {
+            this.onEscapeKeyDown(event)
+        }
         else if(ARROW_CODES.includes(keyCode) && this.mode === 'navigation') {
             event.preventDefault()
             this.onArrowKeyDown(event)
         }
-        else if(keyCode === BACKSPACE) this.onBackspaceKeyDown(event)
+        else if(keyCode === BACKSPACE) {
+            this.onBackspaceKeyDown(event)
+        }
         else if(keyCode === LETTERS.A && (event.metaKey || event.ctrlKey)) {
-            if(this.mode === 'navigation' && this.grid.multiselectable === 'true') {
-                event.preventDefault()
-                this.grid.selectAll()
-            }
+            this.onSelectAllKeyDown(event)
         }
         else if([SPACE, ...DIGIT_CODES, ...LETTER_CODES].includes(keyCode)) {
-            if(keyCode === SPACE && this.readonly && this.selected && !this.disabled) {
-                event.preventDefault()
-                this.grid.unselect()
-                this.selected = 'true'
-                this.emit('click')
-            }
-            if(!event.metaKey && !event.ctrlKey) this.mode = 'edit'
+            this.onCharacterKeyDown(event)
+        }
+    }
+    onCharacterKeyDown(event) {
+        const { keyCode } = event
+        if(keyCode === SPACE && this.readonly && this.selected && !this.disabled) {
+            event.preventDefault()
+            this.grid.unselect()
+            this.selected = 'true'
+            this.emit('click')
+        }
+        if(!event.metaKey && !event.ctrlKey) this.mode = 'edit'
+    }
+    onSelectAllKeyDown(event) {
+        if(this.mode === 'navigation' && this.grid.multiselectable === 'true') {
+            event.preventDefault()
+            this.grid.selectAll()
         }
     }
     onBackspaceKeyDown(event) {
         if(!this.readonly && this.mode === 'navigation') {
             event.preventDefault()
+
             const selected = this.grid.selected
             if(selected.length) selected.forEach(cell => cell.value = '')
             else this.value = ''
+
+            const activeCell = this.grid.activeCell
+            activeCell.unmerge()
+            activeCell.value = ''
         }
     }
-    onEnterKeyDown({ ctrlKey, metaKey }) {
+    onEnterKeyDown() {
         if(this.mode === 'navigation') {
             const grid = this.grid
-            if(ctrlKey || metaKey) {
-                const selected = grid.selected
-                if(selected.length) {
-                    const merged = selected.filter(cell => Boolean(cell.merged.length))
-                    grid.unselect()
-                    if(merged.length) merged.forEach(cell => cell.unmerge())
-                    else {
-                        grid.merge(selected)
-                        selected[0].mode = 'edit'
-                    }
-                } else this.unmerge()
-            } else {
+            const selected = grid.selected
+            if(selected.length) {
+                const merged = selected.filter(cell => Boolean(cell.merged.length))
                 grid.unselect()
-                this.mode = 'edit'
+                if(merged.length) merged.forEach(cell => cell.unmerge())
+                else {
+                    grid.merge(selected)
+                }
             }
+            else if(this.value) this.mode = 'edit'
+            else if(this.merged.length) this.unmerge()
         } else {
             this.mode = 'navigation'
             this.element.focus()
-        }
-    }
-    unmerge() {
-        const merged = this.merged
-        if(merged.length) {
-            let cell
-            while(cell = merged.pop()) {
-                cell.span = null
-                cell.hidden = false
-            }
-            const element = this.element
-            element.rowSpan = 1
-            element.colSpan = 1
         }
     }
     onEscapeKeyDown() {
@@ -289,12 +297,36 @@ export class GridCell extends Instance {
         }
         if(target) {
             if(grid.multiselectable === 'true') {
-                if(shiftKey) grid.updateSelection(target)
+                if(shiftKey) {
+                    if([UP, DOWN].includes(keyCode) &&
+                        grid.activeCell.index === target.index &&
+                        target.colSpan === 1 && target.merged.length) {
+                            target.selected = 'true'
+                    }
+                    else grid.updateSelection(target)
+                }
                 else {
                     grid.unselect()
                     target.focus()
                 }
             } else target.focus()
+        }
+    }
+    focus() {
+        this.span? this.span.focus() : this.node.focus()
+    }
+    unmerge() {
+        const merged = this.merged
+        if(merged.length) {
+            let cell
+            while(cell = merged.pop()) {
+                cell.span = null
+                cell.hidden = false
+            }
+            const element = this.element
+            element.rowSpan = 1
+            element.colSpan = 1
+            if(this.value) this.emit('change')
         }
     }
 }

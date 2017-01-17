@@ -29,24 +29,12 @@ const rooms = [
 ]
 
 export function schedule() {
+    const datenow = new Date
     const schedulegrid = grid({
         multiselectable : 'true',
-        onchange : event => {
-            const filter = ({ value }) => Boolean(value)
-            const datacells = schedulegrid.findAll(GridCell, filter)
-            const data = datacells.map(({ value, row, node, index }) => {
-                return {
-                    value,
-                    time : row.node.querySelector('time').innerHTML,
-                    duration : node.rowSpan * 30,
-                    room : rooms[index]
-                }
-            })
-            localStorage.setItem('data', JSON.stringify(data))
-        },
         children : [
             thead(tr([
-                th(),
+                th(datenow.getDate() + '/' + datenow.getMonth() + 1),
                 ...rooms.map(room => th(room))
             ])),
             tbody(hours.map((hour, h) =>
@@ -66,6 +54,23 @@ export function schedule() {
         const cell = schedulegrid.rows[rowIndex].cells[colIndex]
         cell.value = timesession.value
         cell.rowSpan = timesession.duration / 30 - 1
+        cell.tabIndex = 0
+    })
+    schedulegrid.init({
+        onchange : (event) => {
+            console.log(event)
+            const filter = ({ value }) => Boolean(value)
+            const datacells = schedulegrid.findAll(GridCell, filter)
+            const data = datacells.map(({ value, row, node, index }) => {
+                return {
+                    value,
+                    time : row.node.querySelector('time').innerHTML,
+                    duration : node.rowSpan * 30,
+                    room : rooms[index]
+                }
+            })
+            localStorage.setItem('data', JSON.stringify(data))
+        }
     })
     return schedulegrid
 }

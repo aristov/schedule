@@ -71,10 +71,6 @@ table.grid tbody tr:nth-child(2n + 1) th
 {
     font-weight: bold;
 }
-table.grid tbody tr td[aria-selected=true]
-{
-    background: rgba(0, 255, 255, 1);
-}
 table.grid td input
 {
     font: inherit;
@@ -102,4 +98,8 @@ table.grid tbody tr.row td.gridcell[data-value]
 {
     background: #ff0;
     border: 3px solid #84f;
+}
+table.grid tbody tr.row td.gridcell[aria-selected=true]
+{
+    background: rgba(0, 255, 255, 1);
 }
