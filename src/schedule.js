@@ -88,6 +88,19 @@ export class Schedule extends Grid {
         }
     }
 
+    loadJSON(data) {
+        this.loading = true
+        JSON.parse(data).forEach(session => {
+            const rowIndex = this.timerows[session.time]
+            const colIndex = this.rooms.indexOf(session.room)
+            const cell = this.rows[rowIndex].cells[colIndex]
+            cell.value = session.value
+            cell.rowSpan = session.duration / 30 - 1
+            cell.tabIndex = 0
+        })
+        this.loading = false
+    }
+
     saveXML() {
         if(!this.loading) {
             const datacells = this.findAll(GridCell, ({ value }) => Boolean(value))
@@ -102,32 +115,49 @@ export class Schedule extends Grid {
                         children : value
                     })
                 }))
+
             const serializer = new XMLSerializer
-            /*fetch('api/schedule', {
+            fetch('.', {
                 method : 'post',
-                data : { srcdoc : serializer.serializeToString(xml) }
-            })*/
-            console.log(serializer.serializeToString(xml))
+                body : serializer.serializeToString(xml)
+            })
+                .then(res => res.text())
+                .then(res => console.log('Saved', res))
         }
     }
 
-    loadJSON(data) {
+    loadXML() {
+        const parser = new DOMParser
         this.loading = true
-        JSON.parse(data).forEach(session => {
-            const rowIndex = this.timerows[session.time]
-            const colIndex = this.rooms.indexOf(session.room)
-            const cell = this.rows[rowIndex].cells[colIndex]
-            cell.value = session.value
-            cell.rowSpan = session.duration / 30 - 1
-            cell.tabIndex = 0
-        })
-        this.loading = false
+        fetch('data/schedule.xml')
+            .then(res => res.text())
+            .then(res => {
+                const doc = parser.parseFromString(res, 'application/xml')
+                if(doc) {
+                    const forEach = Array.prototype.forEach
+                    forEach.call(doc.documentElement.children,
+                        session => {
+                            this.addSession(session)
+                        })
+                }
+                this.loading = false
+            })
+    }
+
+    addSession(session) {
+        const rowIndex = this.timerows[session.getAttribute('time')]
+        const colIndex = this.rooms.indexOf(session.getAttribute('room'))
+        const cell = this.rows[rowIndex].cells[colIndex]
+        cell.value = session.textContent
+        cell.rowSpan = session.getAttribute('duration') / 30 - 1
+        cell.tabIndex = 0
     }
 }
 
 export function schedule(init) {
     const instance = new Schedule('table', init)
-    const data = localStorage.getItem('data')
-    if(data) instance.loadJSON(data)
+    /*const data = localStorage.getItem('data')
+    if(data) instance.loadJSON(data)*/
+    instance.loadXML()
     return instance
 }
