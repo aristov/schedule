@@ -1,21 +1,24 @@
 const express = require('express')
-const estatic = require('express-static')
-const fs = require('fs')
 const app = express()
 
-app.use(estatic(__dirname + '/'))
-
 /*app.get('/', function (req, res) {
-    const file = fs.readFileSync('index.html', 'utf-8')
-    res.send(file)
-})*/
-/*app.get('/src/schedule.css', function (req, res) {
-    const file = fs.readFileSync('src/schedule.css', 'utf-8')
-    res.send(file)
-})
-app.get('/build/build.index.js', function (req, res) {
-    const file = fs.readFileSync('build/build.index.js', 'utf-8')
-    res.send(file)
+    res.send('Hello World!')
 })*/
 
-app.listen(3000)
+app.post('/', function (req, res) {
+    res.send('Got a POST request')
+})
+
+app.put('/user', function (req, res) {
+    res.send('Got a PUT request at /user')
+})
+
+app.delete('/user', function (req, res) {
+    res.send('Got a DELETE request at /user')
+})
+
+app.use(express.static('.'))
+
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!')
+})

@@ -19,6 +19,7 @@ export function time(init) {
 export class Schedule extends Grid {
     constructor(object, init) {
         super(object)
+        this.loading = false
         this.datenow = new Date
         this.init({
             multiselectable : true,
@@ -110,23 +111,23 @@ export class Schedule extends Grid {
         }
     }
 
-    loadJSON() {
+    loadJSON(data) {
         this.loading = true
-        JSON.parse(localStorage.getItem('data'))
-            .forEach(session => {
-                const rowIndex = this.timerows[session.time]
-                const colIndex = this.rooms.indexOf(session.room)
-                const cell = this.rows[rowIndex].cells[colIndex]
-                cell.value = session.value
-                cell.rowSpan = session.duration / 30 - 1
-                cell.tabIndex = 0
-            })
+        JSON.parse(data).forEach(session => {
+            const rowIndex = this.timerows[session.time]
+            const colIndex = this.rooms.indexOf(session.room)
+            const cell = this.rows[rowIndex].cells[colIndex]
+            cell.value = session.value
+            cell.rowSpan = session.duration / 30 - 1
+            cell.tabIndex = 0
+        })
         this.loading = false
     }
 }
 
 export function schedule(init) {
     const instance = new Schedule('table', init)
-    instance.loadJSON()
+    const data = localStorage.getItem('data')
+    if(data) instance.loadJSON(data)
     return instance
 }
