@@ -74,6 +74,10 @@ export class Grid extends Instance {
         first.value = value
         if(first.value) first.emit('change')
     }
+    selectAllVertical(cell) {
+        const { rows } = this
+        rows.forEach(row => row.cells[cell.index].selected = 'true')
+    }
     selectAll() {
         const rows = this.rows
         const firstRowCells = rows[0].cells

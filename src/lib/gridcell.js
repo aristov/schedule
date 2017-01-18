@@ -233,7 +233,9 @@ export class GridCell extends Instance {
     onSelectAllKeyDown(event) {
         if(this.mode === 'navigation' && this.grid.multiselectable) {
             event.preventDefault()
-            this.grid.selectAll()
+            this.row.multiselectable?
+                this.grid.selectAll() :
+                this.grid.selectAllVertical(this)
         }
     }
     onBackspaceKeyDown(event) {
