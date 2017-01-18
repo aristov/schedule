@@ -13,7 +13,7 @@ app.use(bodyParser.text());
 app.post('/', ({ body }, res) => {
     if(body) {
         fs.writeFileSync(xmlpath, body)
-        console.log('Save file: ' + body)
+        console.log('\nSave file: ' + body)
         res.send('File saved!' + fs.readFileSync(xmlpath, 'utf-8'))
     } else {
         res.send('Error! No data received!')

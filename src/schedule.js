@@ -12,6 +12,8 @@ const ROOMS = [
     'Fa studio'
 ]
 
+const forEach = Array.prototype.forEach
+
 export function time(init) {
     return htmldom('time', init)
 }
@@ -24,7 +26,7 @@ export class Schedule extends Grid {
         this.init({
             multiselectable : true,
             onchange : () => {
-                this.saveJSON()
+                // this.saveJSON()
                 this.saveXML()
             },
             children : [this.head, this.body]
@@ -134,7 +136,6 @@ export class Schedule extends Grid {
             .then(res => {
                 const doc = parser.parseFromString(res, 'application/xml')
                 if(doc) {
-                    const forEach = Array.prototype.forEach
                     forEach.call(doc.documentElement.children,
                         session => {
                             this.addSession(session)
