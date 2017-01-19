@@ -120,7 +120,7 @@ export class Schedule extends Grid {
                 body : serializer.serializeToString(xml)
             })
                 .then(res => res.text())
-                .then(res => console.log('Saved', res))
+                .then(res => console.log(res))
         }
     }
 

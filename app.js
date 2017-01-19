@@ -3,18 +3,19 @@ const path = require('path')
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const DOMParser = require('xmldom').DOMParser
 
 const app = express()
 
 const xmlpath = path.join(__dirname, './data/schedule.xml')
+parser = new DOMParser
 
 app.use(bodyParser.text());
 
 app.post('/', ({ body }, res) => {
     if(body) {
         fs.writeFileSync(xmlpath, body)
-        console.log('\nSave file: ' + body)
-        res.send('File saved!' + fs.readFileSync(xmlpath, 'utf-8'))
+        res.send('File saved!')
     } else {
         res.send('Error! No data received!')
     }
