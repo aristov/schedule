@@ -49,11 +49,11 @@ export class Grid extends Instance {
         if(active) active.active = false
         if(cell) cell.active = true
     }
-    unselect() {
+    unselectAll() {
         this.selected.forEach(cell => cell.selected = 'false')
         this.selection = null
     }
-    merge(cells) {
+    mergeCells(cells) {
         const first = cells[0]
         const last = cells[cells.length - 1]
         let value = first.value
@@ -73,10 +73,6 @@ export class Grid extends Instance {
         first.element.rowSpan = last.row.index - first.row.index + 1
         first.value = value
         if(first.value) first.emit('change')
-    }
-    selectAllVertical(cell) {
-        const { rows } = this
-        rows.forEach(row => row.cells[cell.index].selected = 'true')
     }
     selectAll() {
         const rows = this.rows
@@ -100,7 +96,7 @@ export class Grid extends Instance {
     }
     updateSelection(target) {
         const activeCell = this.activeCell
-        this.unselect()
+        this.unselectAll()
         if(activeCell && target !== activeCell) {
             const activeRow = activeCell.row
             const rowStart = Math.min(activeRow.index, target.row.index)

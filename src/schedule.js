@@ -25,10 +25,7 @@ export class Schedule extends Grid {
         this.datenow = new Date
         this.init({
             multiselectable : true,
-            onchange : () => {
-                // this.saveJSON()
-                this.saveXML()
-            },
+            onchange : () => this.saveXML(),
             children : [this.head, this.body]
         })
         this.init(init)
@@ -117,7 +114,6 @@ export class Schedule extends Grid {
                         children : value
                     })
                 }))
-
             const serializer = new XMLSerializer
             fetch('.', {
                 method : 'post',

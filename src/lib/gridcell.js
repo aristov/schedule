@@ -166,10 +166,11 @@ export class GridCell extends Instance {
     set rowSpan(rowSpan) {
         const cells = [this]
         let next = this
-        for(let i = 0; i < rowSpan; i++) {
+        while(rowSpan-- > 0 && next) {
             cells.push(next = next.bottomSibling)
         }
-        this.grid.merge(cells)
+        this.grid.mergeCells(cells)
+        // this.grid.mergeCells(this.column.slice(this.index + 1, rowSpan + 1))
     }
     get rowSpan() {
         return this.node.rowSpan
@@ -185,7 +186,7 @@ export class GridCell extends Instance {
     }
     onClick() {
         if(this.mode === 'navigation' && !this.disabled) {
-            this.grid.unselect()
+            this.grid.unselectAll()
             this.selected = 'true'
         }
     }
@@ -224,7 +225,7 @@ export class GridCell extends Instance {
         const { keyCode } = event
         if(keyCode === SPACE && this.readonly && this.selected && !this.disabled) {
             event.preventDefault()
-            this.grid.unselect()
+            this.grid.unselectAll()
             this.selected = 'true'
             this.emit('click')
         }
@@ -235,7 +236,7 @@ export class GridCell extends Instance {
             event.preventDefault()
             this.row.multiselectable?
                 this.grid.selectAll() :
-                this.grid.selectAllVertical(this)
+                this.column.forEach(cell => cell.selected = 'true')
         }
     }
     onBackspaceKeyDown(event) {
@@ -257,7 +258,7 @@ export class GridCell extends Instance {
             const selected = grid.selected
             const cells = []
             if(selected.length) {
-                grid.unselect()
+                grid.unselectAll()
                 selected.forEach(cell => {
                     cells.push(cell)
                     if(cell.merged.length) {
@@ -267,7 +268,7 @@ export class GridCell extends Instance {
                         cell.unmerge()
                     }
                 })
-                grid.merge(cells)
+                grid.mergeCells(cells)
                 grid.activeCell = cells[0]
                 grid.activeCell.focus()
                 grid.activeCell.mode = 'edit'
@@ -287,7 +288,7 @@ export class GridCell extends Instance {
             this.mode = 'navigation'
             this.element.focus()
         }
-        else this.grid.unselect()
+        else this.grid.unselectAll()
     }
     onDoubleClick() {
         this.mode = 'edit'
@@ -300,10 +301,10 @@ export class GridCell extends Instance {
             const rowCells = current.row.cells
             const column = current.column
             switch(keyCode) {
-                case LEFT: target = rowCells[0]; break
                 case UP: target = column[0]; break
-                case RIGHT: target = rowCells[rowCells.length - 1]; break
                 case DOWN: target = column[column.length - 1]; break
+                case LEFT: target = rowCells[0]; break
+                case RIGHT: target = rowCells[rowCells.length - 1]; break
             }
         } else if(altKey) {
             switch(keyCode) {
@@ -314,10 +315,10 @@ export class GridCell extends Instance {
             }
         } else {
             switch(keyCode) {
-                case LEFT: target = current.leftSibling; break
                 case UP: target = current.topSibling; break
-                case RIGHT: target = current.rightSibling; break
                 case DOWN: target = current.bottomSibling; break
+                case LEFT: target = current.leftSibling; break
+                case RIGHT: target = current.rightSibling; break
             }
         }
         if(target) {
@@ -326,7 +327,7 @@ export class GridCell extends Instance {
                     grid.updateSelection(target)
                 }
                 else {
-                    grid.unselect()
+                    grid.unselectAll()
                     target.focus()
                 }
             } else target.focus()

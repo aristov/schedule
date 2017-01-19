@@ -79,7 +79,7 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance|null}
      */
     find(Class, filter, value) {
-        const selector = `[role~=${Class.name.toLowerCase()}]`
+        const selector = `[role~=${ Class.name.toLowerCase() }]`
         return filter?
             this.findAll(Class, filter, value)[0] || null :
             Class.getInstance(this.element.querySelector(selector))
@@ -93,7 +93,7 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Array} array of found instances
      */
     findAll(Class, filter, value) {
-        const selector = `[role~=${Class.name.toLowerCase()}]`
+        const selector = `[role~=${ Class.name.toLowerCase() }]`
         const result = map.call(
             this.element.querySelectorAll(selector),
             element => Class.getInstance(element))
@@ -112,7 +112,7 @@ export class Instance extends ARIADOMAssembler {
      * @returns {Instance} found instance
      */
     closest(Class, filter, value) {
-        const selector = `[role~=${Class.name.toLowerCase()}]`
+        const selector = `[role~=${ Class.name.toLowerCase() }]`
         if(typeof filter === 'string') {
             filter = instance => instance[filter] === value
         }
