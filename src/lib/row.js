@@ -17,6 +17,12 @@ export class Row extends Instance {
     get multiselectable() {
         return this.element.getAttribute('aria-multiselectable') === 'true'
     }
+    /*set selected(selected) {
+        this.cells.forEach(cell => cell.selected = selected)
+    }
+    get selected() {
+        Boolean(this.cells.every(cell => cell.selected === 'true'))
+    }*/
     get grid() {
         return this.closest(Grid)
     }

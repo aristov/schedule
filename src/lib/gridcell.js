@@ -178,6 +178,9 @@ export class GridCell extends Instance {
     get colSpan() {
         return this.node.colSpan
     }
+    set colSpan(colSpan) {
+        console.log(this.row, colSpan)
+    }
     onBlur() {
         this.mode = 'navigation'
     }

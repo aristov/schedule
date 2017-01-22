@@ -28,6 +28,12 @@ export class Grid extends Instance {
     get multiselectable() {
         return this.element.getAttribute('aria-multiselectable') === 'true'
     }
+    set selected(selected) {
+        this.rows.forEach(row => row.selected = selected)
+    }
+    /*get selected() {
+        Boolean(this.rows.every(row => row.selected === 'true'))
+    }*/
     get selected() {
         return this.cells.filter(cell => cell.selected === 'true')
     }
