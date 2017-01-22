@@ -3,8 +3,7 @@ import { Grid, GridCell, rowgroup, rowheader, row, columnheader } from 'ariamodu
 import moment from 'moment'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
-
-const date = moment().format(DATE_FORMAT)
+const DEFAULT_TIME = '09:00'
 
 export class TimeCell extends GridCell {}
 
@@ -16,12 +15,14 @@ export class TimeTable extends Grid {
 
     init(init) {
         const columns = init.columns.split(' ')
+        const { date = moment().format(DATE_FORMAT) } = init
+        const start = moment([date, init.time || DEFAULT_TIME].join('T'))
         const headgroup = rowgroup({
             tagName : 'thead',
             children : row([
                 columnheader({
                     tabIndex : 0,
-                    children : moment(date, DATE_FORMAT).format('DD/MM')
+                    children : start.format('DD/MM')
                 }),
                 columns.map(children => columnheader({
                     style : { width : 95 / columns.length + '%' },
@@ -30,20 +31,22 @@ export class TimeTable extends Grid {
             ])
         })
         const bodygroup = rowgroup()
-        const time = moment(init.time || '09:00', 'hh:mm')
-        const day = time.day()
-        while(time.day() === day) {
+        const day = start.day()
+        while(start.day() === day) {
             bodygroup.children = timerow({
-                time,
+                time : start,
                 children : [
-                    rowheader(time.format('HH:mm')),
+                    rowheader(start.format('HH:mm')),
                     columns.map(() => timecell({ selected : false }))
                 ]
             })
-            time.add(30, 'm')
+            start.add(30, 'm')
         }
-        init.children = [headgroup, bodygroup]
         delete init.columns
+        super.init({
+            multiselectable : true,
+            children : [headgroup, bodygroup]
+        })
         super.init(init)
     }
 
@@ -56,13 +59,6 @@ export class TimeTable extends Grid {
     }
 }
 
-export function timetable({
-    date = moment().format(DATE_FORMAT)
-} = {}) {
-    return new TimeTable('table', {
-        date,
-        multiselectable : true,
-        time : '09:00',
-        columns : 'Neo Fa Forte Sol Piano'
-    })
+export function timetable(init) {
+    return new TimeTable('table', init)
 }

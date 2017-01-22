@@ -1,7 +1,9 @@
 import { timetable } from './lib/timetable'
 
 const schedule = timetable({
-    date : '2017-01-22'
+    columns : 'Neo Fa Forte Sol Piano',
+    date : '2017-01-22',
+    time : '09:00',
 })
 
 document.body.append(schedule.node)
