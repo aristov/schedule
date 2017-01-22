@@ -1,47 +1,79 @@
 import { timerow } from './timerow'
-import { Grid, gridcell, rowgroup, rowheader, row, columnheader } from 'ariamodule'
+import { Grid, GridCell, ColumnHeader,
+    rowgroup, rowheader, row, columnheader } from 'ariamodule'
 import moment from 'moment'
 
+const DATE_FORMAT = 'YYYY-MM-DD'
+
+const cells = 'Neo Sol Fa Forte Piano'.split(' ')
+const date = moment().format(DATE_FORMAT)
+
+export class TimeCell extends GridCell {}
+
+export function timecell(init) {
+    return new TimeCell('td', init)
+}
+
 export class TimeTable extends Grid {
+
+    constructor(object, init) {
+        super(object)
+        this.children = [this.headGroup, this.bodyGroup]
+        if(init) this.init(init)
+    }
 
     set date(date) {
         this.dataset = { date }
     }
 
     get date() {
-        return this.dataset.date || moment().format('YYYY-MM-DD')
+        return this.dataset.date || moment().format(DATE_FORMAT)
+    }
+
+    get headGroup() {
+        return rowgroup({
+            tagName : 'thead',
+            children : row([
+                columnheader({
+                    tabIndex : 0,
+                    children : moment(date, DATE_FORMAT).format('DD/MM')
+                }),
+                cells.map(children => columnheader({
+                    style : { width : 95 / cells.length + '%' },
+                    children,
+                }))
+            ])
+        })
+    }
+
+    get bodyGroup() {
+        const bodygroup = rowgroup()
+        const time = moment(date, DATE_FORMAT).hour(9)
+        while(time.hour()) {
+            bodygroup.children = timerow({
+                time : time,
+                children : [
+                    rowheader(time.format('HH:mm')),
+                    cells.map(() => timecell({ selected : false }))
+                ]
+            })
+            time.add(30, 'm')
+        }
+        return bodygroup
     }
 }
 
-export function timetable(init) {
-    const cells = 'Neo Sol Fa Forte Piano'.split(' ')
+export class DaySwitcher extends ColumnHeader {
 
-    const headgroup = rowgroup({
-        tagName : 'thead',
-        children : row([
-            columnheader(moment().format('DD/MM')),
-            cells.map(children => columnheader({
-                style : { width : 95 / cells.length + '%' },
-                children,
-            }))
-        ])
-    })
+}
 
-    const bodygroup = rowgroup({})
-    const time = moment(9, 'h')
-    while(time.hour()) {
-        bodygroup.children = timerow({
-            time : time,
-            children : [
-                rowheader(time.format('HH:mm')),
-                cells.map(() => gridcell({ selected : false }))
-            ]
-        })
-        time.add(30, 'm')
-    }
-
+export function timetable({
+    date = moment().format(DATE_FORMAT)
+} = {}) {
     return new TimeTable('table', {
+        date,
         multiselectable : true,
-        children : [headgroup, bodygroup]
+        start : '09:00',
+        columns : 'Neo Fa Sol Forte Piano'
     })
 }

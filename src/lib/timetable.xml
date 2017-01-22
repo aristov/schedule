@@ -1,0 +1,5 @@
+<timetable date="2017-01-22" start="09:00" columns="Neo Sol Fa Forte Piano">
+    <timeevent time="10:00" duration="180m" column="Forte">Шарма Пармон</timeevent>
+    <timeevent time="18:00" duration="180m" column="Sol">Off Beats</timeevent>
+    <timeevent time="18:00" duration="360m" column="Neo">S3P</timeevent>
+</timetable>
