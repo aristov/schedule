@@ -90,7 +90,7 @@ export class Schedule extends Grid {
     loadJSON(data) {
         this.loading = true
         JSON.parse(data).forEach(session => {
-            const rowIndex = this.timerows[session.time]
+            const rowIndex = this.timerows[session.date]
             const colIndex = this.rooms.indexOf(session.room)
             const cell = this.rows[rowIndex].cells[colIndex]
             cell.value = session.value
