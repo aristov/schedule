@@ -1,4 +1,5 @@
-import { Grid, Row, gridcell, rowgroup, rowheader, row, columnheader } from 'ariamodule'
+import { timerow } from './timerow'
+import { Grid, gridcell, rowgroup, rowheader, row, columnheader } from 'ariamodule'
 import moment from 'moment'
 
 export class TimeTable extends Grid {
@@ -10,32 +11,6 @@ export class TimeTable extends Grid {
     get date() {
         return this.dataset.date || moment().format('YYYY-MM-DD')
     }
-}
-
-export class TimeRow extends Row {
-    constructor(object, init) {
-        super(object, init)
-        this.sync()
-    }
-
-    sync() {
-        const now = moment()
-        const start = this.time
-        const end = this.time.add(30, 'm')
-        this.current = now.isBetween(start, end)? 'time' : 'false'
-        setTimeout(() => this.sync(), 30 * 1000)
-    }
-
-    set time(time) {
-        this.dataset = { time : time.format('x') }
-    }
-    get time() {
-        return moment(this.dataset.time, 'x')
-    }
-}
-
-export function timerow(init) {
-    return new TimeRow('tr', init)
 }
 
 export function timetable(init) {
