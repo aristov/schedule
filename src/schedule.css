@@ -24,7 +24,6 @@ table.grid th
 }
 table.grid td
 {
-    width: 18%;
     text-align: center;
     position: relative;
 }

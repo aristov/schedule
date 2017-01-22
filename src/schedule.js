@@ -1,6 +1,6 @@
+import { xmldom } from 'dommodule'
 import { thead, tbody, tr, th, htmldom } from 'htmlmodule'
-import { Grid, GridCell, row, gridcell } from './lib/grid'
-import { xmldom } from './lib/xmlassembler'
+import { Grid, GridCell, row, gridcell } from 'ariamodule'
 
 const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 const MINUTES = ['00', '30']
