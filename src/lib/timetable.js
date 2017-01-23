@@ -32,6 +32,20 @@ export class TimeTable extends Grid {
             children : row([
                 columnheader({
                     tabIndex : 0,
+                    onkeydown : event => {
+                        const { key } = event
+                        if(key.startsWith('Arrow')) {
+                            const date = moment(this.date)
+                            switch(key) {
+                                case 'ArrowUp': date.add(1, 'd'); break
+                                case 'ArrowDown': date.subtract(1, 'd'); break
+                                case 'ArrowLeft': date.subtract(1, 'M'); break
+                                case 'ArrowRight': date.add(1, 'M'); break
+                            }
+                            this.date = date.format(DATE_FORMAT)
+                            event.preventDefault()
+                        }
+                    },
                     children : moment().format('DD/MM')
                 }),
                 columns.map(children => columnheader({
