@@ -107,3 +107,8 @@ table.grid tbody tr.row[aria-current=time] th
 {
     background: rgba(127, 255, 255, 1);
 }
+
+table.grid thead tr.row th:first-child
+{
+    font-size: 15px;
+}

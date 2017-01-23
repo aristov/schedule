@@ -7,7 +7,20 @@ const DEFAULT_TIME = '00:00'
 
 const { map } = Array.prototype
 
-export class TimeCell extends GridCell {}
+export class TimeCell extends GridCell {
+    /*init(init) {
+        this.node.onchange = event => {
+            this.dataset.value = this.input.value
+        }
+        super.init(init)
+    }
+    set value(value) {
+        this.dataset.value = this.input.value = value
+    }
+    get value() {
+        return this.input.value
+    }*/
+}
 
 export function timecell(init) {
     return new TimeCell('td', init)
@@ -84,7 +97,7 @@ export class TimeTable extends Grid {
             this.bodies.forEach(body => body.hidden = true)
             this.children = bodygroup
         }
-        this.rows[0].cells[0].node.textContent = moment(date).format('DD/MM')
+        this.rows[0].cells[0].node.textContent = moment(date).format('DD/MM/YY')
         this.dataset = { date }
     }
 
