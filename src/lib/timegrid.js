@@ -1,32 +1,17 @@
-import { timerow } from './timerow'
-import { Grid, GridCell, rowgroup, rowheader, row, columnheader } from 'ariamodule'
 import moment from 'moment'
+import { Grid, rowgroup, rowheader, row, columnheader } from 'ariamodule'
+import { timerow } from './timerow'
+import { timecell } from './timecell'
+import { schedule, reservation } from './schedule'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_TIME = '00:00'
 
 const { map } = Array.prototype
 
-export class TimeCell extends GridCell {
-    /*init(init) {
-        this.node.onchange = event => {
-            this.dataset.value = this.input.value
-        }
-        super.init(init)
-    }
-    set value(value) {
-        this.dataset.value = this.input.value = value
-    }
-    get value() {
-        return this.input.value
-    }*/
-}
+const doc = schedule()
 
-export function timecell(init) {
-    return new TimeCell('td', init)
-}
-
-export class TimeTable extends Grid {
+export class TimeGrid extends Grid {
 
     init(init) {
         super.init({ multiselectable : true })
@@ -36,6 +21,24 @@ export class TimeTable extends Grid {
             super.init(init)
             this.date = date || moment().format(DATE_FORMAT)
         }
+        this.node.onchange = ({ target }) => {
+            if(target.tagName === 'TD') {
+                const cell = target.assembler
+                doc.reservation = reservation({
+                    time : cell.row.time.format(),
+                    duration : cell.duration,
+                    detail : cell.columnheader.node.textContent,
+                    children : cell.value,
+                })
+                fetch('.', { method : 'post', body : doc.toString() })
+                    .then(res => res.text())
+                    .then(text => console.log(text))
+            }
+        }
+    }
+
+    save(event) {
+
     }
 
     set columns(columns) {
@@ -85,13 +88,10 @@ export class TimeTable extends Grid {
             const time = moment([date, this.time].join('T'))
             const day = time.day()
             while(time.day() === day) {
-                bodygroup.children = timerow({
-                    time : time,
-                    children : [
-                        rowheader(time.format('HH:mm')),
-                        columns.map(() => timecell({ selected : false }))
-                    ]
-                })
+                bodygroup.children = timerow({ time, children : [
+                    rowheader(time.format('HH:mm')),
+                    columns.map(() => timecell({ selected : false }))
+                ] })
                 time.add(30, 'm')
             }
             this.bodies.forEach(body => body.hidden = true)
@@ -114,6 +114,6 @@ export class TimeTable extends Grid {
     }
 }
 
-export function timetable(init) {
-    return new TimeTable('table', init)
+export function timegrid(init) {
+    return new TimeGrid('table', init)
 }

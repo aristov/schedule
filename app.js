@@ -14,8 +14,8 @@ app.use(bodyParser.text());
 
 app.post('/', ({ body }, res) => {
     if(body) {
-        fs.writeFileSync(xmlpath, body)
-        res.send('File saved!')
+        fs.writeFileSync(xmlpath, body + '\n')
+        res.send(`The file ${ xmlpath } is saved successfully!`)
     } else {
         res.send('Error! No data received!')
     }
