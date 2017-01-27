@@ -32,6 +32,7 @@ export class TimeRow extends Row {
     }
     get time() {
         return moment(this.dataset.time, 'x')
+        // fixme
     }
 }
 

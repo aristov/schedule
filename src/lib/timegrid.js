@@ -7,7 +7,7 @@ import { schedule, reservation, Reservation } from './schedule'
 const DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_TIME = '00:00'
 
-const { forEach, map } = Array.prototype
+const { forEach } = Array.prototype
 
 const doc = schedule()
 const parser = new DOMParser
@@ -45,7 +45,7 @@ export class TimeGrid extends Grid {
             doc.reservation = reservation({
                 time : cell.row.time.format(),
                 duration : cell.duration,
-                detail : cell.columnheader.node.textContent,
+                detail : cell.columnHeader.node.textContent,
                 children : cell.value,
             })
             fetch('.', { method : 'post', body : doc.toString() })
@@ -95,18 +95,13 @@ export class TimeGrid extends Grid {
                     onkeydown : this.onArrowKeyDown.bind(this),
                     children : moment().format('DD/MM')
                 }),
-                columns.map(children => columnheader({ // fixme
+                columns.map(children => columnheader({
                     style : { width : 95 / columns.length + '%' },
                     dataset: { detail : children },
                     children,
                 }))
             ])
         })
-    }
-
-    // fixme +
-    get bodies() {
-        return map.call(this.node.tBodies, ({ assembler }) => assembler)
     }
 
     set date(date) {

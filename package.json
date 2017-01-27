@@ -39,7 +39,7 @@
     "whatwg-fetch": "^2.0.0"
   },
   "scripts": {
-    "serve": "WATCH=1 ENTRY=index webpack"
+    "start": "WATCH=true ENTRY=index ES6=true webpack"
   },
   "engines": {
     "node": ">=0.6"
