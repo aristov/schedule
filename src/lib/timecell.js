@@ -13,11 +13,7 @@ export class TimeCell extends GridCell {
         const change = this.value !== value
         super.value = value
         if(change && !this.loading) {
-            const event = new CustomEvent('change', {
-                bubbles : true,
-                cancelable : true
-            })
-            this.node.dispatchEvent(event)
+            this.emit('change')
         }
     }
 
@@ -28,13 +24,46 @@ export class TimeCell extends GridCell {
     set owns(owns) {
         const change = this.value && owns.length !== this.owns.length
         super.owns = owns
-        if(change) {
-            const event = new CustomEvent('change', {
-                bubbles : true,
-                cancelable : true
-            })
-            this.node.dispatchEvent(event)
+        if(change && !this.loading) {
+            this.emit('change')
         }
+    }
+
+    emit(eventType) {
+        const event = new CustomEvent(eventType, {
+            bubbles : true,
+            cancelable : true
+        })
+        this.node.dispatchEvent(event)
+    }
+
+    replaceWith(cell) {
+        if(this.value && cell) {
+            if(this.owns.length) this.owns = []
+            if(cell.owns.length) cell.owns = []
+            const rows = this.grid.rows
+            const index1 = this.row.index
+            const index2 = cell.row.index
+            const row1 = rows[index1].node
+            const row2 = rows[index2].node
+            const ref1 = this.node.nextSibling
+            const ref2 = cell.node.nextSibling
+            row1.insertBefore(cell.node, ref1)
+            row2.insertBefore(this.node, ref2)
+            this.focus()
+            this.emit('change')
+        }
+    }
+
+    onArrowKeyDown(event) {
+        if(event.altKey) {
+            switch(event.key) {
+                case 'ArrowLeft': this.replaceWith(this.prev); break
+                case 'ArrowRight': this.replaceWith(this.next); break
+                case 'ArrowUp': this.replaceWith(this.topSibling); break
+                case 'ArrowDown': this.replaceWith(this.bottomSibling); break
+            }
+        } else super.onArrowKeyDown(event)
     }
 
     get owns() {

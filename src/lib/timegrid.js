@@ -23,7 +23,7 @@ export class TimeGrid extends Grid {
         }
         super.init({
             multiselectable : true,
-            // onchange : this.onChange.bind(this)
+            onchange : this.onChange.bind(this)
         })
         this.load()
     }
@@ -42,8 +42,8 @@ export class TimeGrid extends Grid {
     set reservation(reservation) {
         const time = moment(reservation.time)
         const selector = `tr[data-time="${ time }"]`
-        const node = this.node.querySelector(selector)
-        if(node) node.assembler.reservation = reservation
+        const row = this.node.querySelector(selector)
+        if(row) row.assembler.reservation = reservation
     }
 
     onChange({ target }) {
