@@ -79,7 +79,7 @@ export class TimeGrid extends Grid {
 
     set reservation(reservation) {
         const time = moment(reservation.time)
-        const selector = `tr[data-time="${ time }"]`
+        const selector = `tr[data-time="${ time.format('x') }"]`
         const row = this.node.querySelector(selector)
         if(row) row.assembler.reservation = reservation
     }
