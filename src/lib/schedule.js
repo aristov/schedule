@@ -1,13 +1,8 @@
-import { XMLDOMAssembler } from 'dommodule'
-
-const XML_NS_URI = 'http://www.w3.org/1999/xml'
+import { DocumentAssembler, ElementAssembler } from 'dommodule'
 
 const serializer = new XMLSerializer
 
-export class Schedule extends XMLDOMAssembler {
-    create(tagName) {
-        this.node = document.implementation.createDocument(XML_NS_URI, tagName, null)
-    }
+export class Schedule extends DocumentAssembler {
     toString() {
         return serializer.serializeToString(this.node)
     }
@@ -29,7 +24,7 @@ export function schedule(init) {
     return new Schedule('schedule', init)
 }
 
-export class Reservation extends XMLDOMAssembler {
+export class Reservation extends ElementAssembler {
     set time(time) {
         this.node.setAttribute('time', time)
     }
@@ -54,6 +49,9 @@ export class Reservation extends XMLDOMAssembler {
     get value() {
         return this.node.textContent
     }
+    /*set schedule(schedule) {
+        this.parentNode = schedule.node
+    }*/
 }
 
 export function reservation(init) {
