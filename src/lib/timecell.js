@@ -9,6 +9,7 @@ export class TimeCell extends GridCell {
         this.loading = false
     }
 
+    // fixme +
     set value(value) {
         const change = this.value !== value
         super.value = value
@@ -17,10 +18,12 @@ export class TimeCell extends GridCell {
         }
     }
 
+    // fixme +
     get value() {
         return super.value
     }
 
+    // fixme +
     set owns(owns) {
         const change = this.value && owns.length !== this.owns.length
         super.owns = owns
@@ -29,6 +32,12 @@ export class TimeCell extends GridCell {
         }
     }
 
+    // fixme +
+    get owns() {
+        return super.owns
+    }
+
+    // fixme +
     emit(eventType) {
         const event = new CustomEvent(eventType, {
             bubbles : true,
@@ -37,6 +46,7 @@ export class TimeCell extends GridCell {
         this.node.dispatchEvent(event)
     }
 
+    // fixme +
     replaceWith(cell) {
         if(this.value && cell) {
             if(this.owns.length) this.owns = []
@@ -55,6 +65,7 @@ export class TimeCell extends GridCell {
         }
     }
 
+    // fixme +
     onArrowKeyDown(event) {
         if(event.altKey) {
             switch(event.key) {
@@ -66,10 +77,7 @@ export class TimeCell extends GridCell {
         } else super.onArrowKeyDown(event)
     }
 
-    get owns() {
-        return super.owns
-    }
-
+    // fixme => rowSpan +
     set duration(duration) {
         const rowSpan = duration / 30
         const index = this.row.index
@@ -77,10 +85,15 @@ export class TimeCell extends GridCell {
         if(owns.length) this.owns = owns
     }
 
+    /*set duration(duration) {
+        this.rowSpan = duration / 30
+    }*/
+
     get duration() {
         return this.rowSpan * 30
     }
 
+    // fixme +
     get columnheader() {
         return this.grid.rows[0].cells[this.index]
     }

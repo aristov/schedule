@@ -27,17 +27,6 @@ export class TimeRow extends Row {
         }
     }
 
-    set current(current) {
-        super.current = current
-        if(current === 'false') {
-            this.node.removeAttribute('aria-current')
-        }
-    }
-
-    get current() {
-        return super.current
-    }
-
     set time(time) {
         this.dataset = { time : time.format('x') }
     }

@@ -39,13 +39,6 @@ export class TimeGrid extends Grid {
             })
     }
 
-    set reservation(reservation) {
-        const time = moment(reservation.time)
-        const selector = `tr[data-time="${ time }"]`
-        const row = this.node.querySelector(selector)
-        if(row) row.assembler.reservation = reservation
-    }
-
     onChange({ target }) {
         if(target.tagName === 'TD') {
             const cell = target.assembler
@@ -59,26 +52,6 @@ export class TimeGrid extends Grid {
                 .then(res => res.text())
                 .then(text => console.log(text))
         }
-    }
-
-    set columns(columns) {
-        columns = columns.split(' ')
-        this.children = rowgroup({
-            tagName : 'thead',
-            children : row([
-                rowheader({
-                    tabIndex : 0,
-                    className : 'gridheader',
-                    onkeydown : this.onArrowKeyDown.bind(this),
-                    children : moment().format('DD/MM')
-                }),
-                columns.map(children => columnheader({
-                    style : { width : 95 / columns.length + '%' },
-                    dataset: { detail : children },
-                    children,
-                }))
-            ])
-        })
     }
 
     onArrowKeyDown(event) {
@@ -104,6 +77,34 @@ export class TimeGrid extends Grid {
         }
     }
 
+    set reservation(reservation) {
+        const time = moment(reservation.time)
+        const selector = `tr[data-time="${ time }"]`
+        const row = this.node.querySelector(selector)
+        if(row) row.assembler.reservation = reservation
+    }
+
+    set columns(columns) {
+        columns = columns.split(' ')
+        this.children = rowgroup({
+            tagName : 'thead',
+            children : row([
+                rowheader({
+                    tabIndex : 0,
+                    className : 'gridheader',
+                    onkeydown : this.onArrowKeyDown.bind(this),
+                    children : moment().format('DD/MM')
+                }),
+                columns.map(children => columnheader({ // fixme
+                    style : { width : 95 / columns.length + '%' },
+                    dataset: { detail : children },
+                    children,
+                }))
+            ])
+        })
+    }
+
+    // fixme +
     get bodies() {
         return map.call(this.node.tBodies, ({ assembler }) => assembler)
     }
