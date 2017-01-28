@@ -7,12 +7,20 @@ export class TimeCell extends GridCell {
         this.duration = reservation.duration
     }
 
+    get time() {
+        return this.row.time
+    }
+
     set duration(duration) {
         this.rowSpan = duration / 30
     }
 
     get duration() {
         return this.rowSpan * 30
+    }
+
+    get detail() {
+        return this.columnHeader.textContent
     }
 }
 

@@ -43,10 +43,10 @@ export class TimeGrid extends Grid {
         if(target.tagName === 'TD') {
             const cell = target.assembler
             doc.reservation = reservation({
-                time : cell.row.time.format(),
+                time : cell.time,
                 duration : cell.duration,
-                detail : cell.columnHeader.node.textContent,
-                children : cell.value,
+                detail : cell.detail,
+                textContent : cell.textContent,
             })
             fetch('.', { method : 'post', body : doc.toString() })
                 .then(res => res.text())
@@ -93,7 +93,7 @@ export class TimeGrid extends Grid {
                     tabIndex : 0,
                     className : 'gridheader',
                     onkeydown : this.onArrowKeyDown.bind(this),
-                    children : moment().format('DD/MM')
+                    children : moment().format('DD/MM'),
                 }),
                 columns.map(children => columnheader({
                     style : { width : 95 / columns.length + '%' },
@@ -106,33 +106,34 @@ export class TimeGrid extends Grid {
 
     set date(date) {
         const selector = `tbody[data-date="${ date }"]`
-        const node = this.node.querySelector(selector)
-        if(node) {
-            this.bodies.forEach(body => body.hidden = body.node !== node)
+        const body = this.node.querySelector(selector)
+        const bodies = this.bodies
+        if(body) {
+            bodies.forEach(body => body.hidden = body.node !== body)
         }
         else {
-            const columns = this.rows[0].cells.slice(1)
             const bodygroup = rowgroup({ dataset : { date } })
+            const columns = this.rows[0].cells.slice(1)
             const time = moment([date, this.time].join('T'))
             const day = time.day()
-            while(time.day() === day) {
+            do {
                 bodygroup.children = timerow({
-                    time,
+                    time : time.format('x'),
                     children : [
                         rowheader(time.format('HH:mm')),
                         columns.map(() => timecell({ selected : false }))
                     ]
                 })
                 time.add(30, 'm')
-            }
-            this.bodies.forEach(body => body.hidden = true)
+            } while(time.day() === day)
+            bodies.forEach(body => body.hidden = true)
             this.children = bodygroup
         }
-        this.gridheader.node.textContent = moment(date).format('DD/MM/YY')
+        this.gridHeader.textContent = moment(date).format('DD/MM/YY')
         this.dataset = { date }
     }
 
-    get gridheader() {
+    get gridHeader() {
         return this.rows[0].cells[0]
     }
 
