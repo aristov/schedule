@@ -32,6 +32,11 @@ export class Schedule extends DocumentAssembler {
     }
 }
 
+/**
+ *
+ * @param {*} init
+ * @returns {Promise}
+ */
 export function schedule(init) {
     return fetch('data/schedule.xml')
         .then(res => res.text())

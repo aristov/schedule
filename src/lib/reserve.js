@@ -1,4 +1,5 @@
 import { ElementAssembler } from 'dommodule'
+import moment from 'moment'
 
 export class Reserve extends ElementAssembler {
     constructor(...args) {
@@ -6,11 +7,17 @@ export class Reserve extends ElementAssembler {
         this.node.assembler = this
     }
     set time(time) {
+        this.node.setAttribute('time', moment(time, 'x').format())
+    }
+    get time() {
+        return moment(this.node.getAttribute('time')).format('x')
+    }
+    /*set time(time) {
         this.node.setAttribute('time', time)
     }
     get time() {
         return this.node.getAttribute('time')
-    }
+    }*/
     set duration(duration) {
         this.node.setAttribute('duration', duration)
     }
@@ -35,7 +42,6 @@ export class Reserve extends ElementAssembler {
     }
     remove() {
         this.node.remove()
-        // this.document.busy = true
     }
 }
 
