@@ -35,7 +35,7 @@ export class Reserve extends ElementAssembler {
     }
     remove() {
         this.node.remove()
-        this.document.busy = true
+        // this.document.busy = true
     }
 }
 

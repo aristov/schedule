@@ -12,7 +12,7 @@ export class Schedule extends DocumentAssembler {
         return serializer.serializeToString(this.node)
     }
     get element() {
-        return this.node.documentElement // fixme
+        return this.node.documentElement
     }
     set reserve(reserve) {
         this.element.append(reserve.node)
