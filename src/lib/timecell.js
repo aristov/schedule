@@ -1,5 +1,5 @@
 import { GridCell } from 'ariamodule'
-import { reserve } from './schedule'
+import { reserve } from './reserve'
 
 export class TimeCell extends GridCell {
 
