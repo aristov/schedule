@@ -11,11 +11,11 @@ export class Schedule extends DocumentAssembler {
     toString() {
         return serializer.serializeToString(this.node)
     }
-    get root() {
+    get element() {
         return this.node.documentElement // fixme
     }
     set reserve(reserve) {
-        this.root.append(reserve.node)
+        this.element.append(reserve.node)
         this.fetch()
     }
     fetch() {

@@ -25,7 +25,7 @@ export class TimeGrid extends Grid {
         })
         schedule().then(schedule => {
             this.schedule = schedule
-            forEach.call(schedule.root.children, node => {
+            forEach.call(schedule.element.children, node => {
                 this.data = new Reserve(node)
             })
             this.busy = false
