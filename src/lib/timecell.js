@@ -73,6 +73,6 @@ export class TimeCell extends GridCell {
     }
 }
 
-export function timecell(init) {
+export function timeCell(init) {
     return new TimeCell('td', init)
 }

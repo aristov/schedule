@@ -6,7 +6,7 @@ const UPDATE_INTERVAL_MS = 30 * 1000
 export class TimeRow extends Row {
     init(init) {
         super.init(init)
-        this.node.classList.add('timerow')
+        this.node.classList.add('timeRow')
         this.sync()
     }
 
@@ -33,6 +33,6 @@ export class TimeRow extends Row {
     }
 }
 
-export function timerow(init) {
+export function timeRow(init) {
     return new TimeRow('tr', init)
 }

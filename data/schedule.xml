@@ -7,4 +7,12 @@
     <reserve time="1485709200000" duration="120" detail="Fa">Алена Лебедева</reserve>
     <reserve time="1486303200000" duration="30" detail="Forte">s</reserve>
     <reserve time="1485684000000" duration="180" detail="Piano">Роман</reserve>
-<reserve time="1485595800000" duration="30" detail="Forte">repka</reserve><reserve time="1485595800000" duration="30" detail="Forte">repka</reserve><reserve time="1486303200000" duration="30" detail="Forte">s</reserve><reserve time="1485595800000" duration="30" detail="Forte">repka</reserve></schedule>
+    <reserve time="1486303200000" duration="30" detail="Forte">s</reserve>
+    <reserve time="1485594000000" duration="180" detail="Neo">Живой голос / Виктор Якушев</reserve>
+    <reserve time="1485615600000" duration="180" detail="Neo">Альберт Мусаелян</reserve>
+    <reserve time="1485626400000" duration="180" detail="Neo">Артур Шмидт</reserve>
+    <reserve time="1485622800000" duration="60" detail="Forte">Заморин Алексей</reserve>
+    <reserve time="1485615600000" duration="240" detail="Piano">Любовь</reserve>
+    <reserve time="1485622800000" duration="120" detail="Sol">Леонид</reserve>
+    <reserve time="1485615600000" duration="180" detail="Fa">Квартет Григория Зайцева</reserve>
+</schedule>

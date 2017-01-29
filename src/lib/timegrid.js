@@ -1,7 +1,7 @@
 import moment from 'moment'
-import { Grid, rowgroup, rowheader, row, columnheader } from 'ariamodule'
-import { timerow } from './timerow'
-import { timecell } from './timecell'
+import { Grid, rowGroup, rowHeader, row, columnHeader } from 'ariamodule'
+import { timeRow } from './timerow'
+import { timeCell } from './timecell'
 import { schedule } from './schedule'
 import { Reserve } from './reserve'
 
@@ -64,16 +64,16 @@ export class TimeGrid extends Grid {
 
     set columns(columns) {
         columns = columns.split(' ')
-        this.children = rowgroup({
+        this.children = rowGroup({
             tagName : 'thead',
             children : row([
-                rowheader({
+                rowHeader({
                     tabIndex : 0,
                     className : 'gridheader',
                     onkeydown : this.onArrowKeyDown.bind(this),
                     children : moment().format('DD/MM'),
                 }),
-                columns.map(children => columnheader({
+                columns.map(children => columnHeader({
                     style : { width : 95 / columns.length + '%' },
                     dataset: { detail : children },
                     children,
@@ -90,16 +90,16 @@ export class TimeGrid extends Grid {
             bodies.forEach(node => node.hidden = node.node !== body)
         }
         else {
-            const bodygroup = rowgroup({ dataset : { date } })
+            const bodygroup = rowGroup({ dataset : { date } })
             const columns = this.rows[0].cells.slice(1)
             const time = moment([date, this.time].join('T'))
             const day = time.day()
             do {
-                bodygroup.children = timerow({
+                bodygroup.children = timeRow({
                     time : time.format('x'),
                     children : [
-                        rowheader(time.format('HH:mm')),
-                        columns.map(() => timecell({ selected : false }))
+                        rowHeader(time.format('HH:mm')),
+                        columns.map(() => timeCell({ selected : false }))
                     ]
                 })
                 time.add(30, 'm')
@@ -130,6 +130,6 @@ export class TimeGrid extends Grid {
 
 Object.defineProperty(TimeGrid.prototype, 'schedule', { writable : true, value : null })
 
-export function timegrid(init) {
+export function timeGrid(init) {
     return new TimeGrid('table', init)
 }
