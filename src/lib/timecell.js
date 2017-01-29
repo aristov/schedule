@@ -11,7 +11,7 @@ export class TimeCell extends GridCell {
     }
 
     onChange({ target }) {
-        if(!this.grid.busy && target === this.node) {
+        if(!this.busy && !this.grid.busy && target === this.node) {
             if(this.reserve) {
                 if(this.value) {
                     ['time', 'duration', 'detail', 'value']
@@ -21,7 +21,7 @@ export class TimeCell extends GridCell {
                     this.reserve.remove()
                     this.reserve = null
                 }
-                this.schedule.busy = true
+                this.busy = true
             } else {
                 if(this.value) {
                     const { time, duration, detail, value } = this
@@ -30,6 +30,19 @@ export class TimeCell extends GridCell {
                 }
             }
         }
+    }
+
+    set busy(busy) {
+        if(busy !== this.busy) {
+            if(busy) {
+                this.schedule.fetch().then(res => this.busy = false)
+            }
+            else super.busy = busy
+        }
+    }
+
+    get busy() {
+        return super.busy
     }
 
     get schedule() {

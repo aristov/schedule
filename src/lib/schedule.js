@@ -18,21 +18,14 @@ export class Schedule extends DocumentAssembler {
     }
     set reservation(reservation) {
         this.root.append(reservation.node)
-        this.busy = true
+        this.fetch()
     }
-    set busy(busy) {
-        if(busy && busy !== this.busy) {
-            fetch('.', { method : 'post', body : this.toString() })
-                .then(res => res.text())
-                .then(text => {
-                    console.log(text) // don't kill me!
-                    this.busy = false
-                })
-        }
-        this.root.setAttribute('aria-busy', String(busy))
-    }
-    get busy() {
-        return this.root.attributes['aria-busy'] === 'true'
+    fetch() {
+        return fetch('.', { method : 'post', body : this.toString() })
+            .then(res => res.text())
+            .then(text => {
+                console.log(text) // don't kill me!
+            })
     }
 }
 
