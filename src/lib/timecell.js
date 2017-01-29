@@ -1,5 +1,5 @@
 import { GridCell } from 'ariamodule'
-import { reservation } from './schedule'
+import { reserve } from './schedule'
 
 export class TimeCell extends GridCell {
 
@@ -25,8 +25,8 @@ export class TimeCell extends GridCell {
             } else {
                 if(this.value) {
                     const { time, duration, detail, value } = this
-                    this.reserve = reservation({ time, duration, detail, value })
-                    if(this.schedule) this.schedule.reservation = this.reserve
+                    this.reserve = reserve({ time, duration, detail, value })
+                    if(this.schedule) this.schedule.reserve = this.reserve
                 }
             }
         }
@@ -49,10 +49,10 @@ export class TimeCell extends GridCell {
         return this.grid.schedule
     }
 
-    set reservation(reservation) {
-        this.value = reservation.textContent
-        this.duration = reservation.duration
-        this.reserve = reservation
+    set data(data) {
+        this.value = data.value
+        this.duration = data.duration
+        this.reserve = data
     }
 
     get time() {

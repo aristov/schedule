@@ -1,20 +1,20 @@
-<schedule xmlns="http://www.w3.org/1999/xml">
-    <reservation time="2017-01-27T10:00:00+03:00" duration="120" detail="Fa">Super band</reservation>
-    <reservation time="2017-01-27T11:30:00+03:00" duration="180" detail="Forte">Snickers</reservation>
-    <reservation time="2017-01-27T12:30:00+03:00" duration="210" detail="Fa">Banana hau</reservation>
-    <reservation time="2017-01-27T13:00:00+03:00" duration="210" detail="Sol">Fixed</reservation>
-    <reservation time="2017-01-27T10:30:00+03:00" duration="270" detail="Piano">Submit the main</reservation>
-    <reservation time="2017-01-27T09:00:00+03:00" duration="210" detail="Sol">Farlamwa</reservation>
-    <reservation time="2017-01-27T09:00:00+03:00" duration="150" detail="Forte">SWWAN</reservation>
-    <reservation time="2017-01-27T09:30:00+03:00" duration="120" detail="Neo">Bibika</reservation>
-    <reservation time="2017-01-27T13:30:00+03:00" duration="240" detail="Neo">OIIN</reservation>
-    <reservation time="2017-01-27T16:30:00+03:00" duration="270" detail="Forte">Fekk</reservation>
-    <reservation time="2017-01-27T16:30:00+03:00" duration="150" detail="Fa">Nihh0</reservation>
-    <reservation time="2017-01-27T20:00:00+03:00" duration="150" detail="Fa">Pastara lasiomonticu</reservation>
-    <reservation time="2017-01-27T18:00:00+03:00" duration="240" detail="Piano">Vififeit</reservation>
-    <reservation time="2017-01-27T17:00:00+03:00" duration="240" detail="Sol">Kaklinou</reservation>
-    <reservation time="2017-01-27T18:00:00+03:00" duration="210" detail="Neo">BriMBA</reservation>
-    <reservation time="2017-01-27T21:00:00+03:00" duration="150" detail="Forte">Night morning</reservation>
-    <reservation time="2017-01-27T21:30:00+03:00" duration="150" detail="Sol">Pece8</reservation>
-    <reservation time="2017-01-27T21:30:00+03:00" duration="150" detail="Neo">CTT</reservation>
+<schedule>
+    <reserve time="2017-01-27T10:00:00+03:00" duration="120" detail="Fa">Super band</reserve>
+    <reserve time="2017-01-27T11:30:00+03:00" duration="180" detail="Forte">Snickers</reserve>
+    <reserve time="2017-01-27T12:30:00+03:00" duration="210" detail="Fa">Banana hau</reserve>
+    <reserve time="2017-01-27T13:00:00+03:00" duration="210" detail="Sol">Fixed</reserve>
+    <reserve time="2017-01-27T10:30:00+03:00" duration="270" detail="Piano">Submit the main</reserve>
+    <reserve time="2017-01-27T09:00:00+03:00" duration="210" detail="Sol">Farlamwa</reserve>
+    <reserve time="2017-01-27T09:00:00+03:00" duration="150" detail="Forte">SWWAN</reserve>
+    <reserve time="2017-01-27T09:30:00+03:00" duration="120" detail="Neo">Bibika</reserve>
+    <reserve time="2017-01-27T13:30:00+03:00" duration="240" detail="Neo">OIIN</reserve>
+    <reserve time="2017-01-27T16:30:00+03:00" duration="270" detail="Forte">Fekk</reserve>
+    <reserve time="2017-01-27T16:30:00+03:00" duration="150" detail="Fa">Nihh0</reserve>
+    <reserve time="2017-01-27T20:00:00+03:00" duration="150" detail="Fa">Pastara lasiomonticu</reserve>
+    <reserve time="2017-01-27T18:00:00+03:00" duration="240" detail="Piano">Vififeit</reserve>
+    <reserve time="2017-01-27T17:00:00+03:00" duration="240" detail="Sol">Kaklinou</reserve>
+    <reserve time="2017-01-27T18:00:00+03:00" duration="210" detail="Neo">BriMBA</reserve>
+    <reserve time="2017-01-27T21:00:00+03:00" duration="150" detail="Forte">Night morning</reserve>
+    <reserve time="2017-01-27T21:30:00+03:00" duration="150" detail="Sol">Pece8</reserve>
+    <reserve time="2017-01-27T21:30:00+03:00" duration="150" detail="Neo">CTT</reserve>
 </schedule>

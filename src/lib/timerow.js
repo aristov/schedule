@@ -18,12 +18,12 @@ export class TimeRow extends Row {
         setTimeout(() => this.sync(), UPDATE_INTERVAL_MS)
     }
 
-    set reservation(reservation) {
-        const selector = `th[data-detail=${ reservation.detail }]`
+    set data(data) {
+        const selector = `th[data-detail=${ data.detail }]`
         const node = this.grid.node.querySelector(selector)
         if(node) {
             const cell = this.cells[node.cellIndex]
-            if(cell) cell.reservation = reservation
+            if(cell) cell.data = data
         }
     }
 

@@ -2,14 +2,12 @@ import moment from 'moment'
 import { Grid, rowgroup, rowheader, row, columnheader } from 'ariamodule'
 import { timerow } from './timerow'
 import { timecell } from './timecell'
-import { schedule, reservation, Reservation } from './schedule'
+import { schedule, Reserve } from './schedule'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_TIME = '00:00'
 
 const { forEach } = Array.prototype
-
-const parser = new DOMParser
 
 export class TimeGrid extends Grid {
 
@@ -27,7 +25,7 @@ export class TimeGrid extends Grid {
         schedule().then(schedule => {
             this.schedule = schedule
             forEach.call(schedule.root.children, node => {
-                this.reservation = new Reservation(node)
+                this.data = new Reserve(node)
             })
             this.busy = false
         })
@@ -56,10 +54,10 @@ export class TimeGrid extends Grid {
         }
     }
 
-    set reservation(reservation) {
-        const selector = `tr[data-time="${ reservation.time }"]`
+    set data(data) {
+        const selector = `tr[data-time="${ data.time }"]`
         const row = this.node.querySelector(selector)
-        if(row) row.assembler.reservation = reservation
+        if(row) row.assembler.data = data
     }
 
     set columns(columns) {
@@ -127,6 +125,8 @@ export class TimeGrid extends Grid {
         return this.dataset.time || DEFAULT_TIME
     }
 }
+
+Object.defineProperty(TimeGrid.prototype, 'schedule', { writable : true, value : null })
 
 export function timegrid(init) {
     return new TimeGrid('table', init)

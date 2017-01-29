@@ -1,7 +1,5 @@
 import { DocumentAssembler, ElementAssembler } from 'dommodule'
 
-/*const { forEach } = Array.prototype*/
-
 const parser = new DOMParser
 const serializer = new XMLSerializer
 
@@ -16,8 +14,8 @@ export class Schedule extends DocumentAssembler {
     get root() {
         return this.node.documentElement // fixme
     }
-    set reservation(reservation) {
-        this.root.append(reservation.node)
+    set reserve(reserve) {
+        this.root.append(reserve.node)
         this.fetch()
     }
     fetch() {
@@ -38,7 +36,7 @@ export function schedule(init) {
         })
 }
 
-export class Reservation extends ElementAssembler {
+export class Reserve extends ElementAssembler {
     constructor(...args) {
         super(...args)
         this.node.assembler = this
@@ -77,6 +75,6 @@ export class Reservation extends ElementAssembler {
     }
 }
 
-export function reservation(init) {
-    return new Reservation('reservation', init)
+export function reserve(init) {
+    return new Reserve('reserve', init)
 }

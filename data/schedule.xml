@@ -1,9 +1,10 @@
-<schedule aria-busy="true">
-    <reservation time="1485680400000" duration="180" detail="Neo">Загадки Евы</reservation>
-    <reservation time="1485691200000" duration="180" detail="Neo">Егор Винников</reservation>
-    <reservation time="1485702000000" duration="240" detail="Neo">Алексей</reservation>
-    <reservation time="1485691200000" duration="180" detail="Forte">Альтера</reservation>
-    
-    <reservation time="1485684000000" duration="180" detail="Fa">Элен и Ребята</reservation>
-    <reservation time="1485709200000" duration="120" detail="Fa">Алена Лебедева</reservation>
-<reservation time="1486303200000" duration="30" detail="Forte">s</reservation><reservation time="1485684000000" duration="180" detail="Piano">Роман</reservation></schedule>
+<schedule>
+    <reserve time="1485680400000" duration="180" detail="Neo">Загадки Евы</reserve>
+    <reserve time="1485691200000" duration="180" detail="Neo">Егор Винников</reserve>
+    <reserve time="1485702000000" duration="240" detail="Neo">Алексей</reserve>
+    <reserve time="1485691200000" duration="180" detail="Forte">Альтера</reserve>
+    <reserve time="1485684000000" duration="180" detail="Fa">Элен и Ребята</reserve>
+    <reserve time="1485709200000" duration="120" detail="Fa">Алена Лебедева</reserve>
+    <reserve time="1486303200000" duration="30" detail="Forte">s</reserve>
+    <reserve time="1485684000000" duration="180" detail="Piano">Роман</reserve>
+</schedule>
