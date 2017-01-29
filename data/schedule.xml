@@ -6,8 +6,4 @@
     <reservation time="1485684000000" duration="120" detail="Piano">Маркел</reservation>
     <reservation time="1485684000000" duration="180" detail="Fa">Элен и Ребята</reservation>
     <reservation time="1485709200000" duration="120" detail="Fa">Алена Лебедева</reservation>
-    <reservation time="1485707400000" duration="30" detail="Sol">sdf</reservation>
-    <reservation time="1485703800000" duration="30" detail="Sol">s</reservation>
-    <reservation time="1485707400000" duration="30" detail="Piano">far</reservation>
-    <reservation time="1485712800000" duration="30" detail="Piano">uuu1</reservation>
-</schedule>
+<reservation time="1486303200000" duration="30" detail="Forte">s</reservation></schedule>

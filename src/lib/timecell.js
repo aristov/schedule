@@ -4,8 +4,9 @@ import { reservation } from './schedule'
 export class TimeCell extends GridCell {
 
     init(init) {
-        super.init({ onchange : this.onChange.bind(this) })
-        super.init(init)
+        super.init(Object.assign({
+            onchange : this.onChange.bind(this)
+        }, init))
         this.reserve = null
     }
 
@@ -20,7 +21,6 @@ export class TimeCell extends GridCell {
                     this.reserve.remove()
                     this.reserve = null
                 }
-                console.log(this.schedule.node)
                 this.schedule.busy = true
             } else {
                 if(this.value) {
