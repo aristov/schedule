@@ -4,9 +4,8 @@ import { reserve } from './schedule'
 export class TimeCell extends GridCell {
 
     init(init) {
-        super.init(Object.assign({
-            onchange : this.onChange.bind(this)
-        }, init))
+        super.init(init)
+        this.node.onchange = this.onChange.bind(this)
         this.reserve = null
     }
 
@@ -50,9 +49,11 @@ export class TimeCell extends GridCell {
     }
 
     set data(data) {
-        this.value = data.value
-        this.duration = data.duration
-        this.reserve = data
+        if(data.detail === this.detail) {
+            this.value = data.value
+            this.duration = data.duration
+            this.reserve = data
+        }
     }
 
     get time() {

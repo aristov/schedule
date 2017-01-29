@@ -19,11 +19,8 @@ export class TimeRow extends Row {
     }
 
     set data(data) {
-        const selector = `th[data-detail=${ data.detail }]`
-        const node = this.grid.node.querySelector(selector)
-        if(node) {
-            const cell = this.cells[node.cellIndex]
-            if(cell) cell.data = data
+        if(data.time === this.time) {
+            this.cells.forEach(cell => cell.data = data)
         }
     }
 

@@ -55,9 +55,7 @@ export class TimeGrid extends Grid {
     }
 
     set data(data) {
-        const selector = `tr[data-time="${ data.time }"]`
-        const row = this.node.querySelector(selector)
-        if(row) row.assembler.data = data
+        this.rows.forEach(row => row.data = data)
     }
 
     set columns(columns) {
