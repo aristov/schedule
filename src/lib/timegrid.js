@@ -19,10 +19,8 @@ export class TimeGrid extends Grid {
             super.init(init)
             this.date = date || moment().format(DATE_FORMAT)
         }
-        super.init({
-            multiselectable : true,
-            busy : true,
-        })
+        super.init({ multiselectable : true })
+        this.busy = true
         schedule().then(schedule => {
             this.schedule = schedule
             forEach.call(schedule.documentElement.children, node => {
@@ -51,15 +49,16 @@ export class TimeGrid extends Grid {
                     break
             }
             this.date = date.format(DATE_FORMAT)
+            this.busy = true
             forEach.call(this.schedule.documentElement.children, node => {
                 this.data = new Reserve(node)
             })
+            this.busy = false
             event.preventDefault()
         }
     }
 
     set data(data) {
-        console.log(data.node)
         this.rows.forEach(row => row.data = data)
     }
 
