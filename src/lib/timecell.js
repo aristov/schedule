@@ -20,6 +20,8 @@ export class TimeCell extends GridCell {
                     this.reserve.remove()
                     this.reserve = null
                 }
+                console.log(this.schedule.node)
+                this.schedule.busy = true
             } else {
                 if(this.value) {
                     const { time, duration, detail, value } = this

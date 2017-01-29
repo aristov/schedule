@@ -14,7 +14,7 @@ export class Schedule extends DocumentAssembler {
         return serializer.serializeToString(this.node)
     }
     get root() {
-        return this.node.documentElement
+        return this.node.documentElement // fixme
     }
     set reservation(reservation) {
         this.root.append(reservation.node)
@@ -25,7 +25,7 @@ export class Schedule extends DocumentAssembler {
             fetch('.', { method : 'post', body : this.toString() })
                 .then(res => res.text())
                 .then(text => {
-                    console.log(text)
+                    console.log(text) // don't kill me!
                     this.busy = false
                 })
         }
