@@ -10,7 +10,7 @@ export class TimeCell extends GridCell {
     }
 
     onChange({ target }) {
-        if(!this.busy && !this.grid.busy && target === this.node) {
+        if(!this.busy && target === this.node) {
             if(this.reserve) {
                 if(this.value) {
                     ['time', 'duration', 'detail', 'value']
@@ -41,7 +41,7 @@ export class TimeCell extends GridCell {
     }
 
     get busy() {
-        return super.busy
+        return this.grid.busy || super.busy
     }
 
     get schedule() {
