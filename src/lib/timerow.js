@@ -4,8 +4,8 @@ import moment from 'moment'
 const UPDATE_INTERVAL_MS = 30 * 1000
 
 export class TimeRow extends Row {
-    constructor(object, init) {
-        super(object, init)
+    init(init) {
+        super.init(init)
         this.node.classList.add('timerow')
         this.sync()
     }
@@ -13,7 +13,7 @@ export class TimeRow extends Row {
     sync() {
         const now = moment()
         const start = moment(this.time, 'x')
-        const end = start.add(30, 'm')
+        const end = moment(this.time, 'x').add(30, 'm')
         this.current = now.isBetween(start, end)? 'time' : 'false'
         setTimeout(() => this.sync(), UPDATE_INTERVAL_MS)
     }
