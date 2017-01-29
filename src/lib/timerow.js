@@ -12,7 +12,7 @@ export class TimeRow extends Row {
 
     sync() {
         const now = moment()
-        const start = moment(this.time)
+        const start = moment(this.time, 'x')
         const end = start.add(30, 'm')
         this.current = now.isBetween(start, end)? 'time' : 'false'
         setTimeout(() => this.sync(), UPDATE_INTERVAL_MS)

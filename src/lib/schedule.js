@@ -1,8 +1,15 @@
 import { DocumentAssembler, ElementAssembler } from 'dommodule'
 
+/*const { forEach } = Array.prototype*/
+
+const parser = new DOMParser
 const serializer = new XMLSerializer
 
 export class Schedule extends DocumentAssembler {
+    constructor(...args) {
+        super(...args)
+        this.node.assembler = this
+    }
     toString() {
         return serializer.serializeToString(this.node)
     }
@@ -10,21 +17,39 @@ export class Schedule extends DocumentAssembler {
         return this.node.documentElement
     }
     set reservation(reservation) {
-        const { time, detail, value } = reservation
-        const node = this.node.querySelector(`[time="${ time }"][detail="${ detail }"`)
-        if(value) {
-            if(node) node.replaceWith(reservation)
-            this.root.append(reservation.node)
+        this.root.append(reservation.node)
+        this.busy = true
+    }
+    set busy(busy) {
+        if(busy && busy !== this.busy) {
+            fetch('.', { method : 'post', body : this.toString() })
+                .then(res => res.text())
+                .then(text => {
+                    console.log(text)
+                    this.busy = false
+                })
         }
-        else if(node) node.remove()
+        this.root.setAttribute('aria-busy', String(busy))
+    }
+    get busy() {
+        return this.root.attributes['aria-busy'] === 'true'
     }
 }
 
 export function schedule(init) {
-    return new Schedule('schedule', init)
+    return fetch('data/schedule.xml')
+        .then(res => res.text())
+        .then(xml => {
+            const doc = parser.parseFromString(xml, 'text/xml')
+            return new Schedule(doc, init)
+        })
 }
 
 export class Reservation extends ElementAssembler {
+    constructor(...args) {
+        super(...args)
+        this.node.assembler = this
+    }
     set time(time) {
         this.node.setAttribute('time', time)
     }
@@ -49,9 +74,14 @@ export class Reservation extends ElementAssembler {
     get value() {
         return this.node.textContent
     }
-    /*set schedule(schedule) {
-        this.parentNode = schedule.node
-    }*/
+    get document() {
+        const doc = this.node.ownerDocument
+        return doc && doc.assembler
+    }
+    remove() {
+        this.node.remove()
+        this.document.busy = true
+    }
 }
 
 export function reservation(init) {

@@ -9,7 +9,6 @@ const DEFAULT_TIME = '00:00'
 
 const { forEach } = Array.prototype
 
-const doc = schedule()
 const parser = new DOMParser
 
 export class TimeGrid extends Grid {
@@ -23,35 +22,15 @@ export class TimeGrid extends Grid {
         }
         super.init({
             multiselectable : true,
-            onchange : this.onChange.bind(this)
+            busy : true,
         })
-        this.load()
-    }
-
-    load() {
-        fetch('data/schedule.xml')
-            .then(response => response.text())
-            .then(text => {
-                const xml = parser.parseFromString(text, 'text/xml')
-                forEach.call(xml.getElementsByTagName('reservation'), node => {
-                    this.reservation = new Reservation(node)
-                })
+        schedule().then(schedule => {
+            this.schedule = schedule
+            forEach.call(schedule.root.children, node => {
+                this.reservation = new Reservation(node)
             })
-    }
-
-    onChange({ target }) {
-        if(target.tagName === 'TD') {
-            const cell = target.assembler
-            doc.reservation = reservation({
-                time : cell.time,
-                duration : cell.duration,
-                detail : cell.detail,
-                textContent : cell.textContent,
-            })
-            fetch('.', { method : 'post', body : doc.toString() })
-                .then(res => res.text())
-                .then(text => console.log(text))
-        }
+            this.busy = false
+        })
     }
 
     onArrowKeyDown(event) {
@@ -78,8 +57,7 @@ export class TimeGrid extends Grid {
     }
 
     set reservation(reservation) {
-        const time = moment(reservation.time)
-        const selector = `tr[data-time="${ time.format('x') }"]`
+        const selector = `tr[data-time="${ reservation.time }"]`
         const row = this.node.querySelector(selector)
         if(row) row.assembler.reservation = reservation
     }
