@@ -1,4 +1,4 @@
-import { DocumentAssembler } from 'dommodule'
+import { DocumentAssembler, element } from 'dommodule'
 
 const parser = new DOMParser
 const serializer = new XMLSerializer
@@ -12,11 +12,16 @@ export class Schedule extends DocumentAssembler {
         return serializer.serializeToString(this.node)
     }
     get element() {
-        return this.node.documentElement
+        const assembler = this.documentElement.assembler
+        if(assembler) return assembler
+        else return element(this.documentElement, {})
     }
     set reserve(reserve) {
-        this.element.append(reserve.node)
+        this.element.children = reserve.node
         this.fetch()
+    }
+    get reserves() {
+        return this.element.children
     }
     fetch() {
         return fetch('.', { method : 'post', body : this.toString() })
