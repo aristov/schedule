@@ -20,6 +20,13 @@ export class TimeSheet extends RowGroup {
         const handler = ({ assembler }) => assembler
         return Array.prototype.map.call(collection, handler)
     }
+    /*set hidden(hidden) {
+        super.hidden = hidden
+        if(!hidden) this.cells[0].focus()
+    }
+    get hidden() {
+        return super.hidden
+    }*/
 }
 
 export function timeSheet(init) {

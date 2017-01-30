@@ -8,7 +8,7 @@ export class TimeCell extends GridCell {
 
     init(init) {
         super.init(init)
-        super.init({ onchange : this.onChange.bind(this) })
+        this.node.onchange = this.onChange.bind(this)
         this.reserve = null
     }
 
@@ -54,7 +54,7 @@ export class TimeCell extends GridCell {
     set data(data) {
         if(data.detail === this.detail) {
             this.value = data.value
-            this.duration = data.duration
+            this.duration = data.duration / MINUTE
             this.reserve = data
             const start = Number(data.time)
             const duration = data.duration
@@ -71,7 +71,7 @@ export class TimeCell extends GridCell {
     }
 
     set duration(duration) {
-        this.rowSpan = duration / (30 * MINUTE)
+        this.rowSpan = duration / 30
     }
 
     get duration() {
@@ -80,6 +80,15 @@ export class TimeCell extends GridCell {
 
     get detail() {
         return this.columnHeader.textContent
+    }
+
+    set value(value) {
+        super.value = value
+        if(!value) this.node.classList.remove('past')
+    }
+
+    get value() {
+        return super.value
     }
 }
 
