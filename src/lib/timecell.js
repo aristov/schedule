@@ -1,6 +1,9 @@
 import { GridCell } from 'ariamodule'
 import { reserve } from './reserve'
 
+const SECOND = 1000
+const MINUTE = 60 * SECOND
+
 export class TimeCell extends GridCell {
 
     init(init) {
@@ -54,11 +57,11 @@ export class TimeCell extends GridCell {
             this.duration = data.duration
             this.reserve = data
             const start = Number(data.time)
-            const duration = data.duration * 60 * 1000
+            const duration = data.duration
             const end = start + duration
             const now = Date.now()
             this.current = start < now && now < end? 'time' : 'false'
-            console.log(this.current, data.time, now, data.duration)
+            this.node.classList.toggle('past', end < now)
         }
     }
 
@@ -67,7 +70,7 @@ export class TimeCell extends GridCell {
     }
 
     set duration(duration) {
-        this.rowSpan = duration / 30
+        this.rowSpan = duration / (30 * MINUTE)
     }
 
     get duration() {
