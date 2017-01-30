@@ -3,6 +3,7 @@ import { Grid, rowGroup, rowHeader, row, columnHeader } from 'ariamodule'
 import { timeRow } from './timerow'
 import { timeCell } from './timecell'
 import { schedule } from './schedule'
+
 import { Reserve } from './reserve'
 import { timeSheet } from './timesheet'
 
@@ -44,7 +45,7 @@ export class TimeGrid extends Grid {
             this.date = date.format(DATE_FORMAT)
             this.busy = true
             forEach.call(this.schedule.documentElement.children, node => {
-                this.data = new Reserve(node)
+                this.data = node.assembler || new Reserve(node)
             })
             this.busy = false
             event.preventDefault()

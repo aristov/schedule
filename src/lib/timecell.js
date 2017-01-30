@@ -53,6 +53,12 @@ export class TimeCell extends GridCell {
             this.value = data.value
             this.duration = data.duration
             this.reserve = data
+            const start = Number(data.time)
+            const duration = data.duration * 60 * 1000
+            const end = start + duration
+            const now = Date.now()
+            this.current = start < now && now < end? 'time' : 'false'
+            console.log(this.current, data.time, now, data.duration)
         }
     }
 
