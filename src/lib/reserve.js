@@ -12,12 +12,6 @@ export class Reserve extends ElementAssembler {
     get time() {
         return moment(this.node.getAttribute('time')).format('x')
     }
-    /*set time(time) {
-        this.node.setAttribute('time', time)
-    }
-    get time() {
-        return this.node.getAttribute('time')
-    }*/
     set duration(duration) {
         this.node.setAttribute('duration', duration)
     }

@@ -4,6 +4,7 @@ import { timeRow } from './timerow'
 import { timeCell } from './timecell'
 import { schedule } from './schedule'
 import { Reserve } from './reserve'
+import { timeSheet } from './timesheet'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_TIME = '00:00'
@@ -51,7 +52,7 @@ export class TimeGrid extends Grid {
     }
 
     set data(data) {
-        this.rows.forEach(row => row.data = data)
+        this.bodies.forEach(body => body.data = data)
     }
 
     set columns(columns) {
@@ -82,7 +83,7 @@ export class TimeGrid extends Grid {
             bodies.forEach(node => node.hidden = node.node !== body)
         }
         else {
-            const bodygroup = rowGroup({ dataset : { date } })
+            const bodygroup = timeSheet({ dataset : { date } })
             const columns = this.rows[0].cells.slice(1)
             const time = moment([date, this.time].join('T'))
             const day = time.day()
