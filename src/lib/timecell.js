@@ -8,7 +8,7 @@ export class TimeCell extends GridCell {
 
     init(init) {
         super.init(init)
-        this.node.onchange = this.onChange.bind(this)
+        super.init({ onchange : this.onChange.bind(this) })
         this.reserve = null
     }
 
@@ -61,6 +61,7 @@ export class TimeCell extends GridCell {
             const end = start + duration
             const now = Date.now()
             this.current = start < now && now < end? 'time' : 'false'
+            this.tabIndex = 0
             this.node.classList.toggle('past', end < now)
         }
     }

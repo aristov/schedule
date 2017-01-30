@@ -3,7 +3,7 @@
     <reserve time="2017-01-30T18:00:00+03:00" duration="180" detail="Neo">Альберт Мусаелян</reserve>
     <reserve time="2017-01-30T21:00:00+03:00" duration="180" detail="Neo">Артур Шмидт</reserve>
     <reserve time="2017-01-30T20:00:00+03:00" duration="60" detail="Piano">Алексей Заморин</reserve>
-    <reserve time="2017-01-30T18:00:00+03:00" duration="240" detail="Forte">Любовь Бессмертная</reserve>
+    <reserve time="2017-01-30T18:00:00+03:00" duration="240" detail="Forte">Любовь Бессмертная 1200+</reserve>
     <reserve time="2017-01-30T20:00:00+03:00" duration="120" detail="Fa">Леонид Лео</reserve>
     <reserve time="2017-01-30T18:00:00+03:00" duration="180" detail="Sol">Квартет Григория Зайцева</reserve>
     <reserve time="2017-01-31T12:00:00+03:00" duration="180" detail="Neo">Виктор Якушев</reserve>
@@ -13,7 +13,7 @@
     <reserve time="2017-01-31T15:30:00+03:00" duration="330" detail="Forte">Алина</reserve>
     <reserve time="2017-01-31T21:00:00+03:00" duration="120" detail="Forte">Станислав трио</reserve>
     <reserve time="2017-01-31T19:00:00+03:00" duration="120" detail="Piano">Любовь</reserve>
-    <reserve time="2017-01-31T17:00:00+03:00" duration="60" detail="Piano">Любовь</reserve>
+    <reserve time="2017-01-31T17:00:00+03:00" duration="60" detail="Piano">Любовь?</reserve>
     <reserve time="2017-01-31T09:30:00+03:00" duration="60" detail="Sol">Ира Гусарова</reserve>
     <reserve time="2017-01-31T19:00:00+03:00" duration="60" detail="Sol">Марина</reserve>
     <reserve time="2017-01-31T20:00:00+03:00" duration="180" detail="Sol">Антон Заслонко</reserve>
