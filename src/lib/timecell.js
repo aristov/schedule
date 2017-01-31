@@ -12,6 +12,20 @@ export class TimeCell extends GridCell {
         this.reserve = null
     }
 
+    update() {
+        if(this.value) {
+            const start = this.time
+            const end = start + this.duration * MINUTE
+            const now = Date.now()
+            this.current = start < now && now < end? 'time' : 'false'
+            this.node.classList.toggle('past', end < now)
+        }
+        else {
+            this.current = 'false'
+            this.node.classList.remove('past')
+        }
+    }
+
     onChange({ target }) {
         if(!this.busy && target === this.node) {
             if(this.reserve) {
@@ -31,6 +45,7 @@ export class TimeCell extends GridCell {
                     if(this.schedule) this.schedule.reserve = this.reserve
                 }
             }
+            this.update()
         }
     }
 
@@ -53,25 +68,26 @@ export class TimeCell extends GridCell {
 
     set data(data) {
         if(data.detail === this.detail) {
-            this.value = data.value
             this.duration = data.duration / MINUTE
+            this.value = data.value
             this.reserve = data
-            const start = Number(data.time)
-            const duration = data.duration
-            const end = start + duration
-            const now = Date.now()
-            this.current = start < now && now < end? 'time' : 'false'
-            this.tabIndex = 0
-            this.node.classList.toggle('past', end < now)
         }
     }
 
     get time() {
-        return this.row.time
+        return Number(this.row.time)
     }
 
     set duration(duration) {
         this.rowSpan = duration / 30
+    }
+
+    set owns(owns) {
+        super.owns = owns
+    }
+
+    get owns() {
+        return super.owns
     }
 
     get duration() {
@@ -82,9 +98,17 @@ export class TimeCell extends GridCell {
         return this.columnHeader.textContent
     }
 
+    set tabIndex(tabIndex) {
+        super.tabIndex = this.value? 0 : tabIndex
+    }
+
+    get tabIndex() {
+        return super.tabIndex
+    }
+
     set value(value) {
         super.value = value
-        if(!value) this.node.classList.remove('past')
+        this.update()
     }
 
     get value() {
