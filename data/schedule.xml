@@ -7,14 +7,14 @@
     <reserve time="2017-01-30T20:00:00+03:00" duration="120" detail="Fa">Леонид Лео (нет)</reserve>
     <reserve time="2017-01-30T18:00:00+03:00" duration="180" detail="Sol">Квартет Григория Зайцева</reserve>
     <reserve time="2017-01-31T12:00:00+03:00" duration="180" detail="Neo">Виктор Якушев</reserve>
-    <reserve time="2017-01-31T15:00:00+03:00" duration="120" detail="Neo">Маргарита</reserve>
+    
     <reserve time="2017-01-31T18:00:00+03:00" duration="180" detail="Neo">Юля Неон</reserve>
     <reserve time="2017-01-31T21:00:00+03:00" duration="180" detail="Neo">Шерер</reserve>
-    <reserve time="2017-01-31T15:30:00+03:00" duration="330" detail="Forte">Алина</reserve>
+    
     <reserve time="2017-01-31T21:00:00+03:00" duration="120" detail="Forte">Станислав трио</reserve>
     <reserve time="2017-01-31T19:00:00+03:00" duration="120" detail="Piano">Любовь</reserve>
     <reserve time="2017-01-31T17:00:00+03:00" duration="60" detail="Piano">Любовь?</reserve>
-    <reserve time="2017-01-31T09:30:00+03:00" duration="60" detail="Sol">Ира Гусарова</reserve>
+    
     <reserve time="2017-01-31T19:00:00+03:00" duration="60" detail="Sol">Марина</reserve>
     <reserve time="2017-01-31T20:00:00+03:00" duration="180" detail="Sol">Антон Заслонко</reserve>
     <reserve time="2017-01-31T19:00:00+03:00" duration="180" detail="Fa">Лора</reserve>
@@ -22,4 +22,9 @@
     <reserve time="2017-01-30T15:00:00+03:00" duration="180" detail="Fa">Семен Величко</reserve>
     <reserve time="2017-01-30T17:00:00+03:00" duration="120" detail="Piano">Алиса</reserve>
     <reserve time="2017-01-30T19:00:00+03:00" duration="60" detail="Piano">Алексей Нестеренко</reserve>
-</schedule>
+    <data>
+        <![CDATA[<><<<KSDFJLKSJDFLVNDSJFHW&#Y@RI&@T IUYEF 2FYWIUEYFJWEYJFYJSDHV]]>
+    </data>
+    <!--BLAH comment-->
+    <?target instructions?>
+<reserve time="2017-01-31T09:30:00+03:00" duration="60" detail="Sol">Ира Гусарова</reserve><reserve time="2017-01-31T11:30:00+03:00" duration="60" detail="Piano">Виктория Бирюкова</reserve><reserve time="2017-01-31T12:00:00+03:00" duration="180" detail="Sol">Алексей Чулошников</reserve><reserve time="2017-01-31T15:00:00+03:00" duration="180" detail="Sol">Маргарита Колотилина</reserve><reserve time="2017-01-31T18:00:00+03:00" duration="60" detail="Sol">Санек</reserve><reserve time="2017-01-31T15:30:00+03:00" duration="330" detail="Forte">Алина</reserve></schedule>

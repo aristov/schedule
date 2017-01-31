@@ -38,23 +38,24 @@ export class TimeGrid extends Grid {
     onArrowKeyDown(event) {
         const { key, target, metaKey } = event
         if(key.startsWith('Arrow')) {
-            if(target === this.gridHeader.node || metaKey) {
-                const date = moment(this.date)
-                switch(key) {
-                    case 'ArrowUp': date.subtract(1, 'w'); break
-                    case 'ArrowDown': date.add(1, 'w'); break
-                    case 'ArrowLeft': date.subtract(1, 'd'); break
-                    case 'ArrowRight': date.add(1, 'd'); break
+            if(target === this.gridHeader.node ||
+                (metaKey && target.tagName === 'TD')) {
+                    const date = moment(this.date)
+                    switch(key) {
+                        case 'ArrowUp': date.subtract(1, 'w'); break
+                        case 'ArrowDown': date.add(1, 'w'); break
+                        case 'ArrowLeft': date.subtract(1, 'd'); break
+                        case 'ArrowRight': date.add(1, 'd'); break
+                    }
+                    this.date = date.format(DATE_FORMAT)
+                    this.busy = true
+                    forEach.call(this.schedule.documentElement.children, node => {
+                        this.data = node.assembler || new Reserve(node)
+                    })
+                    this.busy = false
+                    if(metaKey) this.body.cells[0].focus()
+                    event.preventDefault()
                 }
-                this.date = date.format(DATE_FORMAT)
-                this.busy = true
-                forEach.call(this.schedule.documentElement.children, node => {
-                    this.data = node.assembler || new Reserve(node)
-                })
-                this.busy = false
-                if(metaKey) this.body.cells[0].focus()
-                event.preventDefault()
-            }
         }
     }
 

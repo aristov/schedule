@@ -21,17 +21,17 @@ table.grid td,
 table.grid th
 {
     background: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    height: 25px;
+    font-size: 18px;
+    padding: 0;
 }
 table.grid td
 {
     text-align: center;
     position: relative;
-}
-table.grid th,
-table.grid td
-{
-    border-left: 1px solid rgba(0, 0, 0, 0.3);
-    min-height: 25px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
 }
 table.grid th
 {
@@ -43,7 +43,7 @@ table.grid thead tr th
 }
 table.grid thead th
 {
-    padding: 20px;
+    padding: 7px;
 }
 table.grid tbody
 {
@@ -96,7 +96,7 @@ table.grid td:focus
 table.grid tbody tr.row td.gridcell[data-value]
 {
     background: #ff0;
-    border: 3px solid #84f;
+    border: 2px solid #84f;
 }
 table.grid tbody tr.row td.gridcell[data-value]:not(:hover):not(:focus)
 {
