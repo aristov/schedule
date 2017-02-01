@@ -49,6 +49,18 @@ export class TimeCell extends GridCell {
         }
     }
 
+    onBackspaceKeyDown(event) {
+        if(!this.readOnly) super.onBackspaceKeyDown(event)
+    }
+
+    set readOnly(readOnly) {
+        super.readOnly = readOnly
+    }
+
+    get readOnly() {
+        return this.grid.readOnly
+    }
+
     set busy(busy) {
         if(busy !== this.busy) {
             if(busy) {
