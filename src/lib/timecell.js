@@ -82,14 +82,6 @@ export class TimeCell extends GridCell {
         this.rowSpan = duration / 30
     }
 
-    set owns(owns) {
-        super.owns = owns
-    }
-
-    get owns() {
-        return super.owns
-    }
-
     get duration() {
         return this.rowSpan * 30
     }

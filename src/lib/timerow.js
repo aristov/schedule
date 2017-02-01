@@ -14,13 +14,18 @@ export class TimeRow extends Row {
         const start = moment(this.time, 'x')
         const end = moment(this.time, 'x').add(30, 'm')
         this.current = now.isBetween(start, end)? 'time' : 'false'
+        this.gridCells.forEach(cell => cell.update())
         setTimeout(() => this.sync(), UPDATE_INTERVAL_MS)
     }
 
     set data(data) {
         if(data.time === this.time) {
-            this.cells.forEach(cell => cell.data = data)
+            this.gridCells.forEach(cell => cell.data = data)
         }
+    }
+
+    get gridCells() {
+        return this.cells.filter(({ role }) => role === 'gridcell' )
     }
 
     set time(time) {
