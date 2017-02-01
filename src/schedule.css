@@ -115,6 +115,10 @@ table.grid tbody tr.row td.gridcell.past
 {
     background: rgba(0, 0, 0, 0.15);
 }
+table.grid tbody tr.row td.gridcell[data-status=paid]
+{
+    background: rgba(0, 255, 0, 0.5);
+}
 table.grid tbody tr.row td.gridcell[aria-selected=true]
 {
     background: rgba(255, 255, 0, 1);
@@ -123,7 +127,6 @@ table.grid tbody tr.row td.gridcell.past:not(:hover):not(:focus)
 {
     opacity: 0.8;
 }
-
 table.grid thead tr.row th:first-child
 {
     font-size: 15px;

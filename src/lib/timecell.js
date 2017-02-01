@@ -70,6 +70,7 @@ export class TimeCell extends GridCell {
         if(data.detail === this.detail) {
             this.duration = data.duration / MINUTE
             this.value = data.value
+            this.status = data.status
             this.reserve = data
         }
     }
@@ -98,13 +99,47 @@ export class TimeCell extends GridCell {
         return super.tabIndex
     }
 
+    /**
+     *
+     * @param {String} value
+     */
     set value(value) {
         super.value = value
         this.update()
     }
 
+    /**
+     *
+     * @returns {String}
+     */
     get value() {
         return super.value
+    }
+
+    set status(status) {
+        if(status) this.dataset = { status }
+        else this.node.removeAttribute('data-status')
+        if(this.reserve) this.reserve.status = status
+    }
+
+    get status() {
+        return this.dataset.status
+    }
+
+    set mode(mode) {
+        if(mode !== this.mode) {
+            if(mode === 'navigation') {
+                if(this.input.value.endsWith('+')) {
+                    this.status = 'paid'
+                    this.input.value = this.input.value.slice(0, this.input.value.length - 1)
+                }
+            }
+            super.mode = mode
+        }
+    }
+
+    get mode() {
+        return super.mode
     }
 }
 

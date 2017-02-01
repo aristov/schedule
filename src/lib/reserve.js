@@ -9,6 +9,12 @@ export class Reserve extends ElementAssembler {
         super(...args)
         this.node.assembler = this
     }
+    set status(status) {
+        this.node.setAttribute('status', status)
+    }
+    get status() {
+        return this.node.getAttribute('status')
+    }
     set time(time) {
         this.node.setAttribute('time', moment(time, 'x').format())
     }
