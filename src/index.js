@@ -4,7 +4,7 @@ const schedule = timeGrid({
     columns : 'Neo Forte Piano Sol Fa',
     // date : '2017-01-23',
     time : '09:00',
-    readOnly : true
+    // readOnly : true,
 })
 
 document.body.append(schedule.node)
