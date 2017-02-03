@@ -1,16 +1,11 @@
 import moment from 'moment'
 import { Grid, rowGroup, rowHeader, row, columnHeader } from 'ariamodule'
+import { timeSheet } from './timesheet'
 import { timeRow } from './timerow'
 import { timeCell } from './timecell'
-import { schedule } from './schedule'
-
-import { Reserve } from './reserve'
-import { timeSheet } from './timesheet'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_TIME = '00:00'
-
-const { forEach } = Array.prototype
 
 export class TimeGrid extends Grid {
 
@@ -23,14 +18,7 @@ export class TimeGrid extends Grid {
         }
         this.multiselectable = true
         this.node.onkeydown = this.onKeyDown.bind(this)
-        this.busy = true
-        schedule().then(schedule => {
-            this.schedule = schedule
-            forEach.call(schedule.documentElement.children, node => {
-                this.data = new Reserve(node)
-            })
-            this.busy = false
-        })
+        // this.busy = true
     }
 
     onKeyDown(event) {
@@ -49,13 +37,14 @@ export class TimeGrid extends Grid {
                     case 'ArrowRight': date.add(1, 'd'); break
                 }
                 this.date = date.format(DATE_FORMAT)
-                this.busy = true
+                /*this.busy = true
                 forEach.call(this.schedule.documentElement.children, node => {
                     this.data = node.assembler || new Reserve(node)
                 })
-                this.busy = false
+                this.busy = false*/
                 if(metaKey) this.body.cells[0].focus()
                 event.preventDefault()
+                this.emit('change')
             }
     }
 
@@ -86,38 +75,40 @@ export class TimeGrid extends Grid {
         })
     }
 
-    set date(date) {
-        const selector = `tbody[data-date="${ date }"]`
-        const body = this.node.querySelector(selector)
-        const bodies = this.bodies
-        if(body) {
-            bodies.forEach(node => node.hidden = node.node !== body)
-        }
-        else {
-            const bodygroup = timeSheet({ dataset : { date } })
-            const columns = this.rows[0].cells.slice(1)
-            const time = moment([date, this.time].join('T'))
-            const day = time.day()
-            do {
-                bodygroup.children = timeRow({
-                    time : time.format('x'),
-                    children : [
-                        rowHeader(time.format('HH:mm')),
-                        columns.map(() => timeCell({ selected : false }))
-                    ]
-                })
-                time.add(30, 'm')
-            }
-            while(time.day() === day)
-            bodies.forEach(body => body.hidden = true)
-            this.children = bodygroup
-        }
-        this.gridHeader.textContent = moment(date).format('DD/MM/YY')
-        this.dataset = { date }
-    }
-
     get gridHeader() {
         return this.rows[0].cells[0]
+    }
+
+    set date(date) {
+        if(date !== this.date) {
+            const selector = `tbody[data-date="${ date }"]`
+            const body = this.node.querySelector(selector)
+            const bodies = this.bodies
+            if(body) {
+                bodies.forEach(node => node.hidden = node.node !== body)
+            }
+            else {
+                const bodygroup = timeSheet({ dataset : { date } })
+                const columns = this.rows[0].cells.slice(1)
+                const time = moment([date, this.time].join('T'))
+                const day = time.day()
+                do {
+                    bodygroup.children = timeRow({
+                        time : time.format('x'),
+                        children : [
+                            rowHeader(time.format('HH:mm')),
+                            columns.map(() => timeCell({ selected : false }))
+                        ]
+                    })
+                    time.add(30, 'm')
+                }
+                while(time.day() === day)
+                bodies.forEach(body => body.hidden = true)
+                this.children = bodygroup
+            }
+            this.gridHeader.textContent = moment(date).format('DD/MM/YY')
+            this.dataset = { date }
+        }
     }
 
     get date() {
@@ -132,8 +123,6 @@ export class TimeGrid extends Grid {
         return this.dataset.time || DEFAULT_TIME
     }
 }
-
-Object.defineProperty(TimeGrid.prototype, 'schedule', { writable : true, value : null })
 
 export function timeGrid(init) {
     return new TimeGrid('table', init)

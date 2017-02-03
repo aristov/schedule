@@ -50,12 +50,12 @@ export class TimeCell extends GridCell {
     }
 
     set busy(busy) {
-        if(busy !== this.busy) {
+        /*if(busy !== this.busy) {
             if(busy) {
                 this.schedule.fetch().then(res => this.busy = false)
             }
-            else super.busy = busy
-        }
+            else */super.busy = busy
+        // }
     }
 
     get busy() {

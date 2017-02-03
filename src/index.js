@@ -1,10 +1,10 @@
-import { timeGrid } from './lib/timegrid'
+import { scheduleApp } from './lib/scheduleapp'
 
-const schedule = timeGrid({
+const app = scheduleApp({
     columns : 'Neo Forte Piano Sol Fa',
-    // date : '2017-01-23',
     time : '09:00',
+    date : '2017-01-31',
     // readOnly : true,
 })
 
-document.body.append(schedule.node)
+document.body = app.node
