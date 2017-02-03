@@ -117,7 +117,7 @@ export class TimeGrid extends Grid {
     }
 
     get gridHeader() {
-        return this.cells[0]
+        return this.rows[0].cells[0]
     }
 
     get date() {
