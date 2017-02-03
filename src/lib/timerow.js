@@ -25,7 +25,7 @@ export class TimeRow extends Row {
     }
 
     get gridCells() {
-        return this.cells.filter(({ role }) => role === 'gridcell' )
+        return this.cells.filter(({ node }) => node.tagName === 'TD' )
     }
 
     set time(time) {

@@ -128,13 +128,16 @@ export class TimeCell extends GridCell {
 
     set mode(mode) {
         if(mode !== this.mode) {
+            const value = this.input.value
+            super.mode = mode
             if(mode === 'navigation') {
-                if(this.input.value.endsWith('+')) {
+                if(value.endsWith('+')) {
                     this.status = 'paid'
-                    this.input.value = this.input.value.slice(0, this.input.value.length - 1)
+                    // this.text.textContent = value.slice(0, value.length - 1)
+                } else {
+                    this.status = ''
                 }
             }
-            super.mode = mode
         }
     }
 

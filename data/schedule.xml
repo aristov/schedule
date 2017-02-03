@@ -6,7 +6,7 @@
     <reserve time="2017-01-30T18:00:00+03:00" duration="240" detail="Forte" status="null">Любовь Бессмертная 1200+</reserve>
     <reserve time="2017-01-30T20:00:00+03:00" duration="120" detail="Fa" status="null">Леонид Лео (нет)</reserve>
     <reserve time="2017-01-30T18:00:00+03:00" duration="180" detail="Sol" status="null">Квартет Григория Зайцева</reserve>
-    <reserve time="2017-01-31T12:00:00+03:00" duration="180" detail="Neo" status="null">Виктор Якушев</reserve>
+    <reserve time="2017-01-31T12:00:00+03:00" duration="180" detail="Neo" status="paid">Виктор Якушев+</reserve>
     <reserve time="2017-01-31T18:00:00+03:00" duration="180" detail="Neo" status="null">Юля Неон</reserve>
     <reserve time="2017-01-31T21:00:00+03:00" duration="180" detail="Neo" status="null">Шерер</reserve>
     <reserve time="2017-01-31T21:00:00+03:00" duration="120" detail="Forte" status="null">Станислав трио</reserve>
@@ -20,32 +20,32 @@
     <reserve time="2017-01-30T17:00:00+03:00" duration="120" detail="Piano" status="null">Алиса</reserve>
     <reserve time="2017-01-30T19:00:00+03:00" duration="60" detail="Piano" status="null">Алексей Нестеренко</reserve>
     <reserve time="2017-01-31T09:30:00+03:00" duration="60" detail="Sol" status="null">Ира Гусарова</reserve>
-    <reserve time="2017-01-31T12:00:00+03:00" duration="120" detail="Piano" status="paid">Виктория Бирюкова 600</reserve>
+    <reserve time="2017-01-31T12:00:00+03:00" duration="120" detail="Piano" status="paid">Виктория Бирюкова 600+</reserve>
     <reserve time="2017-01-31T12:00:00+03:00" duration="180" detail="Sol" status="null">Алексей Чулошников</reserve>
     <reserve time="2017-01-31T15:00:00+03:00" duration="180" detail="Sol" status="null">Маргарита Колотилина</reserve>
     <reserve time="2017-01-31T18:00:00+03:00" duration="60" detail="Sol" status="null">Санек</reserve>
     <reserve time="2017-01-31T15:30:00+03:00" duration="330" detail="Forte" status="null">Алина</reserve>
-    <reserve time="2017-02-09T20:00:00+03:00" duration="180" detail="Forte">Эвелина</reserve>
-    <reserve time="2017-02-01T11:00:00+03:00" duration="180" detail="Neo" status="paid">Константин 1200</reserve>
-    <reserve time="2017-02-01T17:00:00+03:00" duration="120" detail="Forte" status="paid">Сергей Смайлов 600</reserve>
-    <reserve time="2017-02-01T16:00:00+03:00" duration="150" detail="Piano" status="paid">Алиса 600</reserve>
-    <reserve time="2017-02-01T18:00:00+03:00" duration="180" detail="Sol" status="paid">Алина 900</reserve>
-    <reserve time="2017-02-01T20:00:00+03:00" duration="60" detail="Forte" status="paid">Катя Калашникова 300</reserve>
-    <reserve time="2017-02-01T19:00:00+03:00" duration="240" detail="Piano" status="paid">Любовь 1200</reserve>
-    <reserve time="2017-02-01T19:00:00+03:00" duration="60" detail="Forte" status="paid">Заморин Алексей 300</reserve>
-    <reserve time="2017-02-01T19:30:00+03:00" duration="180" detail="Neo" status="paid">Вольный Путь Сергей 1700</reserve>
+    <reserve time="2017-02-09T20:00:00+03:00" duration="180" detail="Forte" status="null">Эвелина</reserve>
+    <reserve time="2017-02-01T11:00:00+03:00" duration="180" detail="Neo" status="paid">Константин 1200+</reserve>
+    <reserve time="2017-02-01T17:00:00+03:00" duration="120" detail="Forte" status="paid">Сергей Смайлов 600+</reserve>
+    <reserve time="2017-02-01T16:00:00+03:00" duration="150" detail="Piano" status="paid">Алиса 600+</reserve>
+    <reserve time="2017-02-01T18:00:00+03:00" duration="180" detail="Sol" status="paid">Алина 900+</reserve>
+    <reserve time="2017-02-01T20:00:00+03:00" duration="60" detail="Forte" status="paid">Катя Калашникова 300+</reserve>
+    <reserve time="2017-02-01T19:00:00+03:00" duration="240" detail="Piano" status="paid">Любовь 1200+</reserve>
+    <reserve time="2017-02-01T19:00:00+03:00" duration="60" detail="Forte" status="paid">Заморин Алексей 300+</reserve>
+    <reserve time="2017-02-01T19:30:00+03:00" duration="180" detail="Neo" status="paid">Вольный Путь Сергей 1700+</reserve>
     <reserve time="2017-02-02T12:00:00+03:00" duration="180" detail="Neo" status="null">Маргарита Колотилина (съемка)</reserve>
-    <reserve time="2017-02-02T12:00:00+03:00" duration="180" detail="Fa" status="null">Винтаж</reserve>
-    <reserve time="2017-02-02T15:00:00+03:00" duration="360" detail="Piano" status="null">Алина</reserve>
-    <reserve time="2017-02-02T18:00:00+03:00" duration="60" detail="Forte" status="null">Алиса</reserve>
-    <reserve time="2017-02-02T19:00:00+03:00" duration="60" detail="Forte" status="null">Марина</reserve>
+    <reserve time="2017-02-02T12:00:00+03:00" duration="240" detail="Fa" status="paid">Винтаж 1200+</reserve>
+    <reserve time="2017-02-02T15:00:00+03:00" duration="240" detail="Forte" status="">Алина</reserve>
+    
+    <reserve time="2017-02-02T19:00:00+03:00" duration="240" detail="Fa" status="">Чичиков</reserve>
     <reserve time="2017-02-02T20:00:00+03:00" duration="180" detail="Forte" status="null">Антон Заслонко</reserve>
     <reserve time="2017-02-02T20:00:00+03:00" duration="60" detail="Neo" status="null">Алиса</reserve>
-    <reserve time="2017-02-02T19:00:00+03:00" duration="240" detail="Sol" status="null">Чичиков</reserve>
-    <reserve time="2017-02-02T19:00:00+03:00" duration="120" detail="Fa" status="null">Любовь</reserve>
-    <reserve time="2017-02-02T21:00:00+03:00" duration="180" detail="Fa" status="null">Сектор</reserve>
     
-    <reserve time="2017-02-01T14:00:00+03:00" duration="120" detail="Fa" status="paid">Маркел 600</reserve>
-    <reserve time="2017-02-01T16:00:00+03:00" duration="120" detail="Sol" status="paid">Маргарита 900</reserve>
-    <reserve time="2017-02-01T17:00:00+03:00" duration="240" detail="Fa" status="paid">Сергей Лях 1200</reserve>
-</schedule>
+    
+    
+    
+    <reserve time="2017-02-01T14:00:00+03:00" duration="120" detail="Fa" status="paid">Маркел 600+</reserve>
+    <reserve time="2017-02-01T16:00:00+03:00" duration="120" detail="Sol" status="paid">Маргарита 900+</reserve>
+    <reserve time="2017-02-01T17:00:00+03:00" duration="240" detail="Fa" status="paid">Сергей Лях 1200+</reserve>
+<reserve time="2017-02-02T15:00:00+03:00" duration="180" detail="Piano" status="">Светлана 900+</reserve><reserve time="2017-02-02T21:00:00+03:00" duration="180" detail="Neo" status="">Молчанов</reserve><reserve time="2017-02-02T19:00:00+03:00" duration="120" detail="Piano" status="">Любовь</reserve><reserve time="2017-02-02T14:00:00+03:00" duration="180" detail="Sol" status="paid">Маркел 900+</reserve><reserve time="2017-02-02T21:00:00+03:00" duration="180" detail="Piano" status="">Сектор</reserve><reserve time="2017-02-02T18:00:00+03:00" duration="240" detail="Sol" status="">Чулошников</reserve><reserve time="2017-02-02T19:00:00+03:00" duration="60" detail="Neo" status="null">Марина</reserve></schedule>

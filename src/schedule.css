@@ -115,6 +115,7 @@ table.grid tbody tr.row td.gridcell.past
 {
     background: rgba(0, 0, 0, 0.15);
 }
+/*table.grid tbody tr.row td.gridcell[data-value$="+"]*/
 table.grid tbody tr.row td.gridcell[data-status=paid]
 {
     background: rgba(0, 255, 0, 0.5);

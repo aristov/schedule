@@ -107,7 +107,8 @@ export class TimeGrid extends Grid {
                     ]
                 })
                 time.add(30, 'm')
-            } while(time.day() === day)
+            }
+            while(time.day() === day)
             bodies.forEach(body => body.hidden = true)
             this.children = bodygroup
         }
@@ -116,7 +117,7 @@ export class TimeGrid extends Grid {
     }
 
     get gridHeader() {
-        return this.rows[0].cells[0]
+        return this.cells[0]
     }
 
     get date() {
