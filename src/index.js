@@ -1,3 +1,15 @@
+import { domtree } from  './lib/domtree'
+
+const parser = new DOMParser
+
+fetch('data/schedule.xml')
+    .then(res => res.text())
+    .then(xml => {
+        const doc = parser.parseFromString(xml, 'text/xml')
+        domtree(doc)
+    })
+
+/*
 import { scheduleApp } from './lib/scheduleapp'
 
 const app = scheduleApp({
@@ -8,3 +20,4 @@ const app = scheduleApp({
 })
 
 document.body = app.node
+*/

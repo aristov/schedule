@@ -1,12 +1,20 @@
 import { DocumentAssembler, element } from 'dommodule'
 import { Reserve } from './reserve'
 
+const { map } = Array.prototype
+
 const parser = new DOMParser
 const serializer = new XMLSerializer
 
 export class Schedule extends DocumentAssembler {
-    constructor(...args) {
-        super(...args)
+    constructor(descriptor, init) {
+        super(descriptor, init)
+        if(descriptor instanceof Node) {
+            const node = descriptor.documentElement
+            if(node.children) map.call(node.children, child => {
+                new Reserve(child)
+            })
+        }
         this.node.assembler = this
     }
     get element() {

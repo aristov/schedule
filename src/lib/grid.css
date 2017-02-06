@@ -1,0 +1,66 @@
+html
+{
+    font: 15px Arial;
+    height: 100%;
+}
+body
+{
+    margin: 0;
+    height: 100%;
+    color: rgba(0, 0, 0, 0.6);
+}
+table.grid
+{
+    width: 100%;
+    user-select: none;
+    cursor: default;
+    background: rgba(0, 0, 0, 0.1);
+    height: 100%;
+    position: relative;
+}
+table.grid .cell
+{
+    background: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 0.4em;
+}
+table.grid tbody tr:nth-child(2n) .cell
+{
+    background: rgba(255, 255, 255, 0.6);
+}
+table.grid .gridcell
+{
+    text-align: center;
+    position: relative;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+}
+table.grid .columnheader
+{
+    color: white;
+    padding: 1em;
+    background: rgba(51, 0, 119, 0.7);
+}
+table.grid .gridcell:focus
+{
+    z-index: 1;
+    color: black;
+}
+table.grid .gridcell input
+{
+    font: inherit;
+    /*background: transparent;*/
+    border: 0;
+    text-align: center;
+    position: absolute;
+    padding: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+table.grid .gridcell input:not[hidden]
+{
+    display: inline-block;
+}
