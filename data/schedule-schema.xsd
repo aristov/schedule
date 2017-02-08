@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="https://www.w3.org/2001/XMLSchema" targetNamespace="https://github.com/aristov/schedule">
+    <xs:element name="schedule" type="scheduleType"/>
+    <xs:complexType name="scheduleType">
+        <xs:sequence>
+            <xs:element name="reserve" type="reserveType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="reserveType">
+        <xs:simpleContent>
+            <xs:extension>
+                <xs:attribute name="time" type="xs:dateTime"/>
+                <xs:attribute name="duration" type="xs:duration"/>
+                <xs:attribute name="detail" type="xs:string"/>
+                <xs:attribute name="value" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>
