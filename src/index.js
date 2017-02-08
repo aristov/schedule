@@ -1,3 +1,35 @@
+import { tree, treeItem } from 'ariamodule'
+import { nodeGrid } from './lib/nodegrid'
+
+const map = Array.prototype.map
+
+function domTree(node) {
+    return treeItem({
+        expanded : node.children.length? 'true' : undefined,
+        children : [
+            nodeGrid({ targetNode : node }),
+            map.call(node.children, child => domTree(child))
+        ]
+    })
+}
+
+tree({
+    parentNode : document.body,
+    children : domTree(document.documentElement)
+})
+
+/*
+import { NodeGrid } from './lib/nodegrid'
+
+Array.prototype.forEach.call(
+    document.head.children,
+    targetNode => {
+        new NodeGrid('table', { targetNode, parentNode : document.body })
+    })
+*/
+
+
+/*
 import { domtree } from  './lib/domtree'
 
 const parser = new DOMParser
@@ -8,6 +40,7 @@ fetch('data/schedule.xml')
         const doc = parser.parseFromString(xml, 'text/xml')
         domtree(doc)
     })
+*/
 
 /*
 import { scheduleApp } from './lib/scheduleapp'
