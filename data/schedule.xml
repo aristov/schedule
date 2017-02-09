@@ -39,18 +39,18 @@
     <reserve time="2017-02-01T19:30:00" duration="180" detail="Neo">Вольный Путь Сергей 1700+</reserve>
     <reserve time="2017-02-02T12:00:00" duration="180" detail="Neo">Маргарита Колотилина (съемка)</reserve>
     <reserve time="2017-02-02T12:00:00" duration="240" detail="Fa">Винтаж 1200+</reserve>
-    <reserve time="2017-02-02T15:00:00" duration="240" detail="Forte" status="">Алина</reserve>
-    <reserve time="2017-02-02T19:00:00" duration="240" detail="Fa" status="">Чичиков</reserve>
+    <reserve time="2017-02-02T15:00:00" duration="240" detail="Forte">Алина</reserve>
+    <reserve time="2017-02-02T19:00:00" duration="240" detail="Fa">Чичиков</reserve>
     <reserve time="2017-02-02T20:00:00" duration="180" detail="Forte">Антон Заслонко</reserve>
     <reserve time="2017-02-02T20:00:00" duration="60" detail="Neo">Алиса</reserve>
     <reserve time="2017-02-01T14:00:00" duration="120" detail="Fa">Маркел 600+</reserve>
     <reserve time="2017-02-01T16:00:00" duration="120" detail="Sol">Маргарита 900+</reserve>
     <reserve time="2017-02-01T17:00:00" duration="240" detail="Fa">Сергей Лях 1200+</reserve>
-    <reserve time="2017-02-02T15:00:00" duration="180" detail="Piano" status="">Светлана 900+</reserve>
-    <reserve time="2017-02-02T21:00:00" duration="180" detail="Neo" status="">Молчанов</reserve>
-    <reserve time="2017-02-02T19:00:00" duration="120" detail="Piano" status="">Любовь</reserve>
+    <reserve time="2017-02-02T15:00:00" duration="180" detail="Piano">Светлана 900+</reserve>
+    <reserve time="2017-02-02T21:00:00" duration="180" detail="Neo">Молчанов</reserve>
+    <reserve time="2017-02-02T19:00:00" duration="120" detail="Piano">Любовь</reserve>
     <reserve time="2017-02-02T14:00:00" duration="180" detail="Sol">Маркел 900+</reserve>
-    <reserve time="2017-02-02T21:00:00" duration="180" detail="Piano" status="">Сектор</reserve>
-    <reserve time="2017-02-02T18:00:00" duration="240" detail="Sol" status="">Чулошников</reserve>
+    <reserve time="2017-02-02T21:00:00" duration="180" detail="Piano">Сектор</reserve>
+    <reserve time="2017-02-02T18:00:00" duration="240" detail="Sol">Чулошников</reserve>
     <reserve time="2017-02-02T19:00:00" duration="60" detail="Neo">Марина</reserve>
 </schedule>

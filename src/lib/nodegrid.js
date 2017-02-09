@@ -7,21 +7,17 @@ export class NodeGrid extends Grid {
         const { childNodes, firstChild } = targetNode
         const isSimple = childNodes.length === 1 && firstChild.nodeType === Node.TEXT_NODE
         this.children = rowGroup([
-            row({
-                // tagName : 'thead',
-                children : [
-                    // columnHeader('tagName'),
-                    rowHeader({ rowSpan : 2, children : targetNode.tagName }),
-                    map.call(targetNode.attributes, attr => columnHeader(attr.name)),
-                    isSimple?
-                        columnHeader('textContent') :
-                        null
-                ]
-            }),
             row([
-                // rowHeader(targetNode.tagName),
+                rowHeader({ rowSpan : 2, children : targetNode.tagName }),
+                map.call(targetNode.attributes, attr => columnHeader(attr.name)),
+                isSimple? columnHeader('textContent') : null
+            ]),
+            row([
                 map.call(targetNode.attributes, attr => gridCell({ value : attr.value })),
-                isSimple? gridCell(targetNode.textContent) : null
+                isSimple? gridCell({
+                    value : targetNode.textContent,
+                    style : { fontWeight: 'bold' }
+                }) : null
             ])
         ])
     }
