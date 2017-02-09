@@ -1,18 +1,32 @@
 body
 {
     font: 15px "Courier New", Courier, monospace;
-    padding: 30px;
+    padding: 10px;
+    background: #aaa;
 }
 
 .treeitem
 {
     padding: 10px;
     margin: 10px;
-    background: rgba(70, 0, 200, 0.07);
+    background: white;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5)
 }
+.treeitem > .group
+{
+    padding: 5px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.1);
+}
 
-.treeitem[aria-expanded=false] > .treeitem
+.treeitem[aria-expanded=false] > .group::after
+{
+    content: '...';
+    text-align: center;
+    display: block;
+    padding: 0 0 5px;
+}
+.treeitem[aria-expanded=false] .treeitem
 {
     display: none;
 }
@@ -31,5 +45,5 @@ body
 
 .gridcell
 {
-    padding: 0 10px;
+    padding: 0 20px;
 }

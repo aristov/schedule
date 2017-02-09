@@ -4,7 +4,7 @@ const { map } = Array.prototype
 
 export class NodeGrid extends Grid {
     set targetNode(targetNode) {
-        this.children = [
+        this.children = rowGroup([
             row({
                 // tagName : 'thead',
                 children : [
@@ -19,7 +19,7 @@ export class NodeGrid extends Grid {
                 map.call(targetNode.attributes, attr => gridCell({ value : attr.value })),
                 // targetNode.textContent? gridCell(targetNode.textContent) : null
             ])
-        ]
+        ])
     }
 }
 
