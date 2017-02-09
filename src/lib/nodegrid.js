@@ -4,6 +4,8 @@ const { map } = Array.prototype
 
 export class NodeGrid extends Grid {
     set targetNode(targetNode) {
+        const { childNodes, firstChild } = targetNode
+        const isSimple = childNodes.length === 1 && firstChild.nodeType === Node.TEXT_NODE
         this.children = rowGroup([
             row({
                 // tagName : 'thead',
@@ -11,13 +13,15 @@ export class NodeGrid extends Grid {
                     // columnHeader('tagName'),
                     rowHeader({ rowSpan : 2, children : targetNode.tagName }),
                     map.call(targetNode.attributes, attr => columnHeader(attr.name)),
-                    // targetNode.textContent? columnHeader('textContent') : null
+                    isSimple?
+                        columnHeader('textContent') :
+                        null
                 ]
             }),
             row([
                 // rowHeader(targetNode.tagName),
                 map.call(targetNode.attributes, attr => gridCell({ value : attr.value })),
-                // targetNode.textContent? gridCell(targetNode.textContent) : null
+                isSimple? gridCell(targetNode.textContent) : null
             ])
         ])
     }

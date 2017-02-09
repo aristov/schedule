@@ -1,26 +1,6 @@
-import { group, tree, treeItem } from 'ariamodule'
-import { nodeGrid } from './lib/nodegrid'
-import { xmlFetch } from './lib/xmlfetch'
+import { domTree } from './lib/xmltree'
 
-const map = Array.prototype.map
-
-function domTree(node) {
-    return treeItem({
-        expanded : node.children.length? 'true' : undefined,
-        children : [
-            nodeGrid({ targetNode : node }),
-            node.children.length?
-                group(map.call(node.children, child => domTree(child))) :
-                null
-        ]
-    })
-}
-
-xmlFetch('data/schedule.xml')
-    .then(doc => tree({
-        parentNode : document.body,
-        children : domTree(doc.documentElement)
-    }))
+domTree('data/schedule.xml', { parentNode : document.body })
 
 /*tree({
     parentNode : document.body,
