@@ -7,3 +7,11 @@ export function xmlFetch(url) {
             return parser.parseFromString(xml, 'text/xml')
         })
 }
+
+export function htmlFetch(url) {
+    return fetch(url)
+        .then(res => res.text())
+        .then(html => {
+            return parser.parseFromString(html, 'text/html')
+        })
+}

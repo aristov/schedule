@@ -5,13 +5,14 @@ import { xmlFetch } from './xmlfetch'
 const map = Array.prototype.map
 
 export function domTreeItem(node) {
+    const children = node.children
     return treeItem({
-        expanded : node.children.length? 'true' : undefined,
+        expanded : children.length? 'true' : undefined,
         tabIndex : 0,
         children : [
             nodeGrid({ targetNode : node }),
-            node.children.length?
-                group(map.call(node.children, child => domTreeItem(child))) :
+            children.length?
+                group(map.call(children, domTreeItem)) :
                 null
         ]
     })
@@ -22,6 +23,9 @@ export class DOMTree extends Tree {
         xmlFetch(src).then(doc => {
             this.children = domTreeItem(doc.documentElement)
         })
+    }
+    set targetNode(targetNode) {
+        this.children = domTreeItem(targetNode.documentElement || targetNode)
     }
 }
 

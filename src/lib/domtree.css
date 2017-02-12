@@ -39,7 +39,7 @@ body
 .grid .columnheader
 {
     font-weight: normal;
-    min-width: 220px;
+    /*min-width: 220px;*/
     font-size: 10px;
     opacity: 0.5;
 }
@@ -47,7 +47,7 @@ body
 .grid .gridcell
 {
     position: relative;
-    padding: 0 20px;
+    padding: 0 30px;
     /*min-width: 220px;*/
     text-align: center;
     box-sizing: border-box;
