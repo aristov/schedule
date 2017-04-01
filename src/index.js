@@ -1,4 +1,4 @@
-import { domTree } from './lib/xmltree'
+/*import { domTree } from './lib/xmltree'
 import { xmlFetch, htmlFetch } from './lib/xmlfetch'
 
 const src = location.hash.slice(1) || '/data/schedule.xml'
@@ -7,7 +7,7 @@ xmlFetch(src).then(node => domTree({
     targetNode : node,
     // type : 'text/xml',
     parentNode : document.body
-}))
+}))*/
 
 /*tree({
  parentNode : document.body,
@@ -38,7 +38,6 @@ xmlFetch(src).then(node => domTree({
  })
  */
 
-/*
  import { scheduleApp } from './lib/scheduleapp'
 
  const app = scheduleApp({
@@ -49,4 +48,3 @@ xmlFetch(src).then(node => domTree({
  })
 
  document.body = app.node
- */

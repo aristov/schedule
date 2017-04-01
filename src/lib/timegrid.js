@@ -85,7 +85,7 @@ export class TimeGrid extends Grid {
             const body = this.node.querySelector(selector)
             const bodies = this.bodies
             if(body) {
-                bodies.forEach(node => node.hidden = node.node !== body)
+                bodies.forEach(b => b.hidden = b.node !== body)
             }
             else {
                 const bodygroup = timeSheet({ dataset : { date } })

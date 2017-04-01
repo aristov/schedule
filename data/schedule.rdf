@@ -1,0 +1,24 @@
+<rdf:RDF xmlns="http://purl.org/NET/c4dm/event.owl#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:time="http://www.w3.org/2006/time#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Event rdfs:label="Rehearsal">
+        <agent rdf:resource="http://fusion1905.ru/person/vv.aristov"/>
+        <time>
+            <time:DateTimeInterval>
+                <time:year>2017</time:year>
+                <time:month>11</time:month>
+                <time:day>7</time:day>
+                <time:hour>19</time:hour>
+                <time:minute>00</time:minute>
+                <time:minutes>120</time:minutes>
+            </time:DateTimeInterval>
+        </time>
+        <place rdf:resource="http://fusion1905.ru/room/neo"/>
+        <factor/>
+        <literal_factor>Rehearsal CTT project</literal_factor>
+        <product/>
+    </Event>
+</rdf:RDF>

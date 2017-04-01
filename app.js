@@ -8,7 +8,7 @@ const DOMParser = require('xmldom').DOMParser
 const app = express()
 
 const xmlpath = path.join(__dirname, './data/schedule.xml')
-parser = new DOMParser
+const parser = new DOMParser
 
 app.use(bodyParser.text());
 
