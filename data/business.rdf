@@ -1,0 +1,29 @@
+<rdf:RDF xml:lang="en"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:vann="http://purl.org/vocab/vann/"
+         xmlns:pto="http://www.productontology.org/id/"
+         xmlns:studio="http://aristov.github.io/studio/ns#"
+         xml:base="http://aristov.github.io/studio/ns#">
+
+    <!--Ontology declaration-->
+    <owl:Ontology rdf:about="http://aristov.github.io/studio/ns">
+        <dc:title>Music studio ontology</dc:title>
+        <dc:description>The vocabulary for describing music studio world.</dc:description>
+        <dc:creator>Vyacheslav Aristov</dc:creator>
+        <dc:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2017-04-01</dc:modified>
+        <dc:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2017-04-01</dc:issued>
+        <vann:preferredNamespacePrefix>studio</vann:preferredNamespacePrefix>
+        <vann:preferredNamespaceUri>http://aristov.github.io/studio/ns#</vann:preferredNamespaceUri>
+    </owl:Ontology>
+
+    <!--General class-->
+    <owl:Class rdf:about="Work">
+        <rdfs:label>Work</rdfs:label>
+        <rdfs:comment>Any kind of work</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="http://aristov.github.io/studio/ns#"/>
+    </owl:Class>
+
+</rdf:RDF>
