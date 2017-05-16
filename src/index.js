@@ -1,50 +1,45 @@
 /*import { domTree } from './lib/xmltree'
-import { xmlFetch, htmlFetch } from './lib/xmlfetch'
+import { xmlFetch } from './lib/xmlfetch'
 
 const src = location.hash.slice(1) || '/data/schedule.xml'
 
 xmlFetch(src).then(node => domTree({
     targetNode : node,
-    // type : 'text/xml',
     parentNode : document.body
-}))*/
+}))
 
-/*tree({
- parentNode : document.body,
- children : domTree(document.documentElement)
- })*/
+tree({
+    parentNode : document.body,
+    children : domTree(document.documentElement)
+})
 
-/*
- import { NodeGrid } from './lib/nodegrid'
+import { NodeGrid } from './lib/nodegrid'
 
- Array.prototype.forEach.call(
- document.head.children,
- targetNode => {
- new NodeGrid('table', { targetNode, parentNode : document.body })
- })
- */
+Array.prototype.forEach.call(
+    document.head.children,
+    targetNode => {
+        new NodeGrid('table', { targetNode, parentNode : document.body })
+    })
 
 
-/*
- import { domtree } from  './lib/domtree'
+import { domtree } from  './lib/domtree'
 
- const parser = new DOMParser
+const parser = new DOMParser
 
- fetch('data/schedule.xml')
- .then(res => res.text())
- .then(xml => {
- const doc = parser.parseFromString(xml, 'text/xml')
- domtree(doc)
- })
- */
+fetch('data/schedule.xml')
+    .then(res => res.text())
+    .then(xml => {
+        const doc = parser.parseFromString(xml, 'text/xml')
+        domtree(doc)
+    })*/
 
- import { scheduleApp } from './lib/scheduleapp'
+import { scheduleApp } from './lib/scheduleapp'
 
- const app = scheduleApp({
- columns : 'Neo Forte Piano Sol Fa',
- time : '09:00',
- date : '2017-01-31',
- // readOnly : true,
- })
+const app = scheduleApp({
+    columns : 'Neo Forte Piano Sol Fa',
+    time : '09:00',
+    date : '2017-01-31',
+    // readOnly : true,
+})
 
- document.body = app.node
+document.body = app.node
