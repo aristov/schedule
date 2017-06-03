@@ -16,9 +16,8 @@ app.post('/', ({ body }, res) => {
     if(body) {
         fs.writeFileSync(xmlpath, body + '\n')
         res.send(`The file ${ xmlpath } is saved successfully!`)
-    } else {
-        res.send('Error! No data received!')
     }
+    else res.send('Error! No data received!')
 })
 
 app.use(express.static('.'))
